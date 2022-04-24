@@ -181,6 +181,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/20/gulimall%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JQ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JQ的技术博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/20/gulimall%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">gulimall配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-20 09:44:14" itemprop="dateCreated datePublished" datetime="2022-04-20T09:44:14+08:00">2022-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-22 09:53:03" itemprop="dateModified" datetime="2022-04-22T09:53:03+08:00">2022-04-22</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>259</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1、环境配置"><a href="#1、环境配置" class="headerlink" title="1、环境配置"></a>1、环境配置</h2><ul>
+<li>项目结构搭建</li>
+<li>配置Mysql</li>
+<li>配置renren-fast和renren-fast-vue</li>
+</ul>
+<p>高版本的springboot默认不加载bootstrap.yml文件，需要在pom里加上依赖。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line"> &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line"> &lt;artifactId&gt;spring-cloud-starter-bootstrap&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/18/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E6%9D%82%E9%A1%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -212,7 +297,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-19 22:11:53" itemprop="dateModified" datetime="2022-04-19T22:11:53+08:00">2022-04-19</time>
+                <time title="修改时间：2022-04-20 16:34:46" itemprop="dateModified" datetime="2022-04-20T16:34:46+08:00">2022-04-20</time>
               </span>
 
           <br>
@@ -221,14 +306,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -291,6 +376,22 @@
 <p>给redis存值，重启，检查是否还存在。开启服务端TCP的6379端口。</p>
 <h3 id="docker-服务器重启自动启动程序"><a href="#docker-服务器重启自动启动程序" class="headerlink" title="docker 服务器重启自动启动程序"></a>docker 服务器重启自动启动程序</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker update mysql --restart=always</span><br></pre></td></tr></table></figure>
 
+<h2 id="3、前端项目配置杂项"><a href="#3、前端项目配置杂项" class="headerlink" title="3、前端项目配置杂项"></a>3、前端项目配置杂项</h2><p>在项目目录下下载需要的组件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmp install</span><br></pre></td></tr></table></figure>
+
+<p>报错</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm ERR! command failed</span><br><span class="line">npm ERR! command sh -c node install.js</span><br><span class="line">npm ERR! Only Mac 64 bits supported.</span><br></pre></td></tr></table></figure>
+
+<p>使用下面命令可以解决。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --ignore-scripts</span><br><span class="line">npm uninstall node-saas      //卸载node -saas</span><br><span class="line">npm install node-sass --save-dev      //重新安装node -saas</span><br></pre></td></tr></table></figure>
+
+<p>运行前端项目</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>如果报错可以试试下面代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm cache --force clean &amp;&amp; npm install --force node-sass</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、renrenfast生成"><a href="#4、renrenfast生成" class="headerlink" title="4、renrenfast生成"></a>4、renrenfast生成</h2>
       
     </div>
 
@@ -332,10 +433,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-17 21:21:32 / 修改时间：21:27:29" itemprop="dateCreated datePublished" datetime="2022-04-17T21:21:32+08:00">2022-04-17</time>
+              <time title="创建时间：2022-04-17 21:21:32" itemprop="dateCreated datePublished" datetime="2022-04-17T21:21:32+08:00">2022-04-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-24 23:02:46" itemprop="dateModified" datetime="2022-04-24T23:02:46+08:00">2022-04-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -352,14 +459,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>65</span>
+              <span>8.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -371,11 +478,43 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="1、配置数据源"><a href="#1、配置数据源" class="headerlink" title="1、配置数据源"></a>1、配置数据源</h1><ul>
+          <h2 id="第二章-JDBC必知必会"><a href="#第二章-JDBC必知必会" class="headerlink" title="第二章 JDBC必知必会"></a>第二章 JDBC必知必会</h2><h3 id="1、配置单个数据源"><a href="#1、配置单个数据源" class="headerlink" title="1、配置单个数据源"></a>1、配置单个数据源</h3><p>建立h2、web、lombak的springboot。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.learn;</span><br><span class="line"><span class="keyword">import</span> com.example.learn.config.ProfileProperties;</span><br><span class="line"><span class="keyword">import</span> com.example.learn.service.LibraryProperties;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.InitializingBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.CommandLineRunner;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.EnableAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.sql.DataSource;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication()</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> <span class="keyword">implements</span> <span class="title class_">CommandLineRunner</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(DemoApplication.class);</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	DataSource dataSource;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		SpringApplication.run(DemoApplication.class, args);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(String... args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		showConnection();</span><br><span class="line">		showData();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">showData</span><span class="params">()</span> &#123;</span><br><span class="line">		jdbcTemplate.queryForList(<span class="string">&quot;SELECT * FROM FOO&quot;</span>).forEach(row -&gt; log.info(row.toString()));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">showConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">		log.info(dataSource.toString());</span><br><span class="line">		<span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> dataSource.getConnection();</span><br><span class="line">		log.info(conn.toString());</span><br><span class="line">		conn.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在resource目录先创建schema.sql文件，写入：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> FOO (ID <span class="type">INT</span> <span class="keyword">IDENTITY</span>, BAR <span class="type">VARCHAR</span>(<span class="number">64</span>));</span><br></pre></td></tr></table></figure>
+
+<p>在resource目录先创建data.sql文件，写入：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> FOO (ID, BAR) <span class="keyword">VALUES</span>(<span class="number">1</span>, <span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> FOO (ID, BAR) <span class="keyword">VALUES</span>(<span class="number">2</span>, <span class="string">&#x27;bbb&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2、配置多个数据源"><a href="#2、配置多个数据源" class="headerlink" title="2、配置多个数据源"></a>2、配置多个数据源</h3><p>配置文件<code>application.properties</code>中写入数据源的信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">foo.datasource.url=jdbc:h2:mem:foo</span><br><span class="line">foo.datasource.username=sa</span><br><span class="line">foo.datasource.password=</span><br><span class="line"></span><br><span class="line">bar.datasource.url=jdbc:h2:mem:bar</span><br><span class="line">bar.datasource.username=sa</span><br><span class="line">bar.datasource.password=</span><br></pre></td></tr></table></figure>
+
+<p>需要指定使用什么连接池：COMMONS-DBCP、TOMCAT-JDBC、HIKARICP。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.zaxxer<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>HikariCP<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置数据源</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> multiDatasource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.CommandLineRunner;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.datasource.DataSourceTransactionManager;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.PlatformTransactionManager;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"><span class="keyword">import</span> javax.sql.DataSource;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排除自动配置，进行手动配置</span></span><br><span class="line"><span class="meta">@SpringBootApplication(exclude = &#123;DataSourceAutoConfiguration.class,</span></span><br><span class="line"><span class="meta">		DataSourceTransactionManagerAutoConfiguration.class,</span></span><br><span class="line"><span class="meta">		JdbcTemplateAutoConfiguration.class&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MultiDataSourceApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(MultiDataSourceApplication.class);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		SpringApplication.run(MultiDataSourceApplication.class, args);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@ConfigurationProperties(&quot;foo.datasource&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> DataSourceProperties <span class="title function_">fooDataSourceProperties</span><span class="params">()</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DataSourceProperties</span>();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="keyword">public</span> DataSource <span class="title function_">fooDataSource</span><span class="params">()</span>&#123;</span><br><span class="line">		<span class="type">DataSourceProperties</span> <span class="variable">dataSourceProperties</span> <span class="operator">=</span> fooDataSourceProperties();</span><br><span class="line">		log.info(<span class="string">&quot;foo datasource:&#123;&#125;&quot;</span>, dataSourceProperties.getUrl());</span><br><span class="line">		<span class="keyword">return</span> dataSourceProperties.initializeDataSourceBuilder().build();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@Resource</span></span><br><span class="line">	<span class="keyword">public</span> PlatformTransactionManager <span class="title function_">fooTxManager</span><span class="params">(DataSource fooDataSource)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DataSourceTransactionManager</span>(fooDataSource);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@ConfigurationProperties(&quot;bar.datasource&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> DataSourceProperties <span class="title function_">barDataSourceProperties</span><span class="params">()</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DataSourceProperties</span>();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="keyword">public</span> DataSource <span class="title function_">barDataSource</span><span class="params">()</span>&#123;</span><br><span class="line">		<span class="type">DataSourceProperties</span> <span class="variable">dataSourceProperties</span> <span class="operator">=</span> barDataSourceProperties();</span><br><span class="line">		log.info(<span class="string">&quot;bar datasource:&#123;&#125;&quot;</span>, dataSourceProperties.getUrl());</span><br><span class="line">		<span class="keyword">return</span> dataSourceProperties.initializeDataSourceBuilder().build();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@Resource</span></span><br><span class="line">	<span class="keyword">public</span> PlatformTransactionManager <span class="title function_">barTxManager</span><span class="params">(DataSource barDataSource)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DataSourceTransactionManager</span>(barDataSource);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、数据库连接池推荐"><a href="#3、数据库连接池推荐" class="headerlink" title="3、数据库连接池推荐"></a>3、数据库连接池推荐</h3><ul>
 <li>druid：快</li>
 <li>HikariCP：监控、SQL防注入</li>
 </ul>
-<h2 id="1-1-druid-定制连接池操作的各中环节"><a href="#1-1-druid-定制连接池操作的各中环节" class="headerlink" title="1.1 druid 定制连接池操作的各中环节"></a>1.1 druid 定制连接池操作的各中环节</h2><p>通过 Filter 可以实现。</p>
+<h3 id="4、JdbcTemplate-的使用"><a href="#4、JdbcTemplate-的使用" class="headerlink" title="4、JdbcTemplate 的使用"></a>4、JdbcTemplate 的使用</h3><p>首先，添加H2数据库的依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.h2database<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>h2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后,创建和表对应的Entiy。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Builder</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String bar;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，完成数据库的查询，添加等功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> simplejdbcdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.RowMapper;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.simple.SimpleJdbcInsert;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.swing.*;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FooDao</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SimpleJdbcInsert simpleJdbcInsert;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insertData</span><span class="params">()</span>&#123;</span><br><span class="line">		<span class="comment">// 方法一：使用jdbcTemplate</span></span><br><span class="line">        Arrays.asList(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>).forEach(bar -&gt; &#123;</span><br><span class="line">            jdbcTemplate.update(<span class="string">&quot;insert into Foo (bar) values (?)&quot;</span>, bar);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//方法二：使用simpleJdbcInsert</span></span><br><span class="line">		HashMap&lt;String, String&gt; row = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        row.put(<span class="string">&quot;bar&quot;</span>, <span class="string">&quot;d&quot;</span>);</span><br><span class="line">        <span class="type">Number</span> <span class="variable">id</span> <span class="operator">=</span> simpleJdbcInsert.executeAndReturnKey(row);</span><br><span class="line">        log.info(<span class="string">&quot;ID of d: &#123;&#125;&quot;</span>, id.longValue());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">listData</span><span class="params">()</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;Count: &#123;&#125;&quot;</span>,jdbcTemplate.queryForObject(<span class="string">&quot;select count(*) from foo&quot;</span>, Long.class));</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; list = jdbcTemplate.queryForList(<span class="string">&quot;select bar from foo&quot;</span>, String.class);</span><br><span class="line">        list.forEach(s -&gt; &#123;log.info(<span class="string">&quot;Bar: &#123;&#125;&quot;</span>, s);&#125;);</span><br><span class="line"></span><br><span class="line">        List&lt;Foo&gt; fooList = jdbcTemplate.query(<span class="string">&quot;select * from foo&quot;</span>, <span class="keyword">new</span> <span class="title class_">RowMapper</span>&lt;Foo&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> Foo <span class="title function_">mapRow</span><span class="params">(ResultSet rs, <span class="type">int</span> rowNum)</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">                <span class="keyword">return</span> Foo.builder().id(rs.getLong(<span class="number">1</span>)).bar(rs.getString(<span class="number">2</span>)).build();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        fooList.forEach(f -&gt; log.info(<span class="string">&quot;Foo: &#123;&#125;&quot;</span>, f));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后，在程序入口调用数据库操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> simplejdbcdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.CommandLineRunner;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.simple.SimpleJdbcInsert;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SiampleJdbcDemoApplication</span> <span class="keyword">implements</span> <span class="title class_">CommandLineRunner</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		SpringApplication.run(SiampleJdbcDemoApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	FooDao fooDao;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">public</span> SimpleJdbcInsert <span class="title function_">simpleJdbcInsert</span><span class="params">(JdbcTemplate jdbcTemplate)</span> &#123;</span><br><span class="line">		<span class="comment">// 将 FOO 和 ID 绑定。</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">SimpleJdbcInsert</span>(jdbcTemplate)</span><br><span class="line">				.withTableName(<span class="string">&quot;FOO&quot;</span>).usingGeneratedKeyColumns(<span class="string">&quot;ID&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(String... args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		fooDao.insertData();</span><br><span class="line">		fooDao.listData();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、NamedParameterJdbcTemplate"><a href="#5、NamedParameterJdbcTemplate" class="headerlink" title="5、NamedParameterJdbcTemplate"></a>5、NamedParameterJdbcTemplate</h3><h3 id="6、事物"><a href="#6、事物" class="headerlink" title="6、事物"></a>6、事物</h3><p><img src="/2022/04/17/%E7%8E%A9%E8%BD%ACSpring%E5%85%A8%E5%AE%B6%E6%A1%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/../images/8d1542c72a220d01da05ce791304e2803b1fb05f16400305babfafdf9b0289bb.png" alt="事务的传播特性"></p>
+<p><img src="/2022/04/17/%E7%8E%A9%E8%BD%ACSpring%E5%85%A8%E5%AE%B6%E6%A1%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/../images/fe7f6ebc510e9a192a19749197febf38cb9950cebdeae177e6a9c8daf9d89287.png" alt="事务的传播特性2">  </p>
+<p>通过 Filter 可以实现。</p>
 
       
     </div>
@@ -426,7 +565,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-19 22:12:40" itemprop="dateModified" datetime="2022-04-19T22:12:40+08:00">2022-04-19</time>
+                <time title="修改时间：2022-04-22 10:17:57" itemprop="dateModified" datetime="2022-04-22T10:17:57+08:00">2022-04-22</time>
               </span>
 
           <br>
@@ -435,7 +574,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.1k</span>
+              <span>6.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -572,21 +711,9 @@
 </ul>
 <h4 id="流程-1"><a href="#流程-1" class="headerlink" title="流程"></a>流程</h4><p>秒杀开始时，前端请求后端生成验证码，然后将生成的验证码信息以<code>vc_用户id_秒杀商品id -&gt; 验证码结果</code>的形式存储在redis中，同时将验证码发给前端。前端展示给用户，用户输入结果，点击秒杀按钮。前端发送请求给后端（同时包含秒杀地址参数），后端先从redis中取出验证码结果验证是否正确。正确则开始在redis中生成path，并进行下一步操作。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>秒杀系统设计 负责项目的设计和开发 2022.4 - 2022.5</p>
-<p>• 项目介绍：为了解决秒杀商品时存在高并发的问题，本项目基于SpringBoot开发秒杀系统。本人主要负责登录模块、商品列表模块、商品详情模板、订单详情模块、秒杀接口优化部分。</p>
-<p>• 主要工作：</p>
-<ol>
-<li><p>实现了隧道代理，支持在 TCP 或 TLS 连接上多次发起 HTTP 请求。</p>
-</li>
-<li><p>支持指定隧道代理，支持添加首部、日志分级、跳过证书验证、动态 Ip 等功能。</p>
-</li>
-<li><p>支持用户自主解密 HTTPs 报文。</p>
-</li>
-<li><p>具有友好的 shell UI，能为用户提供日常使用的 shell 命令。</p>
-</li>
-</ol>
-<p>• 项目成果：通过隧道代理的方式复用 keep 到目标站点之间的 TCP 连接。</p>
-<p>• 个人收获：通过隧道代理的方式复用 keep 到目标站点之间的 TCP 连接。</p>
-<p>• 相关技术：SpringBoot、MySql、Redis、RabbitMQ、Thymeleaf</p>
+<p>• 项目介绍：为了解决秒杀商品时存在高并发的问题，本项目基于SpringBoot开发秒杀系统。本人主要负责登录模块、商品列表模块、商品详情模板、订单详情模块、秒杀接口优化部分、安全模块。</p>
+<p>• 个人收获：对于基于SpringBoot项目的开发有了更加完整和深刻的认识。</p>
+<p>• 相关技术：SpringBoot、MySql、mybatis、Redis、RabbitMQ、Thymeleaf、jmeter</p>
 
       
     </div>
@@ -1279,7 +1406,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1341,13 +1468,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">21k</span>
+    <span title="站点总字数">30k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">19 分钟</span>
+    <span title="站点阅读时长">28 分钟</span>
 </div>
 
         
