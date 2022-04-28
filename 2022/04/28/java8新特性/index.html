@@ -21,19 +21,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":210,"display":"post","padding":18,"offset":8,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="src 存储blog中使用到的自定义图片等资源，勿删。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="JQ的技术博客">
-<meta property="og:url" content="http://example.com/src/readme.html">
+  <meta name="description" content="java8 新特性 接口的默认方法(Default Methods for Interfaces) Lambda表达式 函数式接口 Streams(流) Parallel Streams(并行流) Maps Date API(日期相关API) Annotations(注解)  链接总结的很棒java8 新特性。 接口的默认方法(Default Methods for Interfaces)1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java8新特性">
+<meta property="og:url" content="http://example.com/2022/04/28/java8%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="JQ的技术博客">
-<meta property="og:description" content="src 存储blog中使用到的自定义图片等资源，勿删。">
+<meta property="og:description" content="java8 新特性 接口的默认方法(Default Methods for Interfaces) Lambda表达式 函数式接口 Streams(流) Parallel Streams(并行流) Maps Date API(日期相关API) Annotations(注解)  链接总结的很棒java8 新特性。 接口的默认方法(Default Methods for Interfaces)1234">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-16T11:07:25.236Z">
-<meta property="article:modified_time" content="2022-04-16T11:07:25.236Z">
+<meta property="article:published_time" content="2022-04-28T14:48:18.000Z">
+<meta property="article:modified_time" content="2022-04-28T14:49:12.798Z">
 <meta property="article:author" content="JQ">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/src/readme">
+<link rel="canonical" href="http://example.com/2022/04/28/java8%E6%96%B0%E7%89%B9%E6%80%A7/">
 
 
 <script id="page-configurations">
@@ -41,13 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title> | JQ的技术博客
-</title>
+  <title>java8新特性 | JQ的技术博客</title>
   
 
 
@@ -179,43 +178,107 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/java8%E6%96%B0%E7%89%B9%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JQ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JQ的技术博客">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java8新特性
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-<div class="post-meta">
+              <time title="创建时间：2022-04-28 22:48:18 / 修改时间：22:49:12" itemprop="dateCreated datePublished" datetime="2022-04-28T22:48:18+08:00">2022-04-28</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>724</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="java8-新特性"><a href="#java8-新特性" class="headerlink" title="java8 新特性"></a>java8 新特性</h2><ul>
+<li>接口的默认方法(Default Methods for Interfaces)</li>
+<li>Lambda表达式</li>
+<li>函数式接口</li>
+<li>Streams(流)</li>
+<li>Parallel Streams(并行流)</li>
+<li>Maps</li>
+<li>Date API(日期相关API)</li>
+<li>Annotations(注解)</li>
+</ul>
+<p>链接总结的很棒<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide/blob/main/docs/java/new-features/java8-tutorial-translate.md">java8 新特性</a>。</p>
+<h3 id="接口的默认方法-Default-Methods-for-Interfaces"><a href="#接口的默认方法-Default-Methods-for-Interfaces" class="headerlink" title="接口的默认方法(Default Methods for Interfaces)"></a>接口的默认方法(Default Methods for Interfaces)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.learnjava.java8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">java8</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Formula</span> <span class="variable">formula</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Formula</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">calculate</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> a + b;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        System.out.println(formula.calculate(<span class="number">10</span>, <span class="number">12</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//使用 default 关键字向接口添加的非抽象方法可以直接调用</span></span><br><span class="line">        System.out.println(formula.mul(<span class="number">10</span>, <span class="number">12</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Formula</span>&#123;</span><br><span class="line">    <span class="type">double</span> <span class="title function_">calculate</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b)</span>;</span><br><span class="line">    <span class="comment">// Java 8使我们能够通过使用 default 关键字向接口添加非抽象方法实现。 此功能也称为虚拟扩展方法。</span></span><br><span class="line">   <span class="keyword">default</span> <span class="type">double</span> <span class="title function_">mul</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>&#123;</span><br><span class="line">       <span class="keyword">return</span> a*b;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/20/gulimall%E9%85%8D%E7%BD%AE/" rel="prev" title="gulimall配置">
+      <i class="fa fa-chevron-left"></i> gulimall配置
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <h3 id="src-存储blog中使用到的自定义图片等资源，勿删。"><a href="#src-存储blog中使用到的自定义图片等资源，勿删。" class="headerlink" title="src 存储blog中使用到的自定义图片等资源，勿删。"></a>src 存储blog中使用到的自定义图片等资源，勿删。</h3>
-      </div>
-      
-      
-      
-    </div>
-    
-
-    
-    
-    
 
 
           </div>
@@ -266,7 +329,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#src-%E5%AD%98%E5%82%A8blog%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E7%89%87%E7%AD%89%E8%B5%84%E6%BA%90%EF%BC%8C%E5%8B%BF%E5%88%A0%E3%80%82"><span class="nav-text">src 存储blog中使用到的自定义图片等资源，勿删。</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java8-%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-text">java8 新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95-Default-Methods-for-Interfaces"><span class="nav-text">接口的默认方法(Default Methods for Interfaces)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
