@@ -29,7 +29,7 @@
 <meta property="og:description" content="1、配置git 生成ssh 配置到github 测试  生成ssh1ssh-keygen -t rsa -C &quot;jiaoqiang2014@163.com&quot;  配置到github在~&#x2F;.ssh目录下生成id_rsa.pub和id_rsa公钥和私钥。打开公钥，复制到github 1cat &#x2F;Users&#x2F;jq&#x2F;.ssh&#x2F;id_rsa.pub  测试连接1sudo ssh -T gi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-18T04:12:51.000Z">
-<meta property="article:modified_time" content="2022-04-20T08:34:46.350Z">
+<meta property="article:modified_time" content="2022-05-01T12:04:05.602Z">
 <meta property="article:author" content="JQ">
 <meta property="article:tag" content="杂项">
 <meta name="twitter:card" content="summary">
@@ -217,7 +217,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-20 16:34:46" itemprop="dateModified" datetime="2022-04-20T16:34:46+08:00">2022-04-20</time>
+                <time title="修改时间：2022-05-01 20:04:05" itemprop="dateModified" datetime="2022-05-01T20:04:05+08:00">2022-05-01</time>
               </span>
 
           <br>
@@ -285,7 +285,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 6379:6379 --name redis \</span><br><span class="line">-v /mydata/redis/data:/data \</span><br><span class="line">-v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf \</span><br><span class="line">-d redis redis-server /etc/redis/redis.conf</span><br></pre></td></tr></table></figure>
 
 <p>检查redis安装是否成功</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it redis redis-cli</span><br><span class="line">set key1 111</span><br><span class="line">get key1</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it redis redis-cli</span><br><span class="line">auth 123456</span><br><span class="line">set key1 111</span><br><span class="line">get key1</span><br></pre></td></tr></table></figure>
 
 <h4 id="持久化redis"><a href="#持久化redis" class="headerlink" title="持久化redis"></a>持久化redis</h4><p>redis重启之后会丢失内存中的数据，可以设置持久化到磁盘中。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /mydata/redis/conf/redis.conf</span><br></pre></td></tr></table></figure>
