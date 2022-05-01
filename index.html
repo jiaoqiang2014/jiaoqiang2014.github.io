@@ -410,7 +410,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-01 20:04:05" itemprop="dateModified" datetime="2022-05-01T20:04:05+08:00">2022-05-01</time>
+                <time title="修改时间：2022-05-01 22:54:38" itemprop="dateModified" datetime="2022-05-01T22:54:38+08:00">2022-05-01</time>
               </span>
 
           <br>
@@ -419,7 +419,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -461,6 +461,10 @@
 <h4 id="M1芯片"><a href="#M1芯片" class="headerlink" title="M1芯片"></a>M1芯片</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker pull --platform linux/x86_64 mysql:8.0.28</span><br></pre></td></tr></table></figure>
 
 <h3 id="查看安装的服务"><a href="#查看安装的服务" class="headerlink" title="查看安装的服务"></a>查看安装的服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker images</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container rm &lt;container id&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image rm &lt;image id&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="docker-启动-mysql"><a href="#docker-启动-mysql" class="headerlink" title="docker 启动 mysql"></a>docker 启动 mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -p 3306:3306 --name mysql \</span><br><span class="line">-v /var/mysql/log:/var/log/mysql \</span><br><span class="line">-v /var/mysql/data:/var/lib/mysql \</span><br><span class="line">-v /var/mysql/conf:/etc/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=123456aa \</span><br><span class="line">-d mysql:8</span><br></pre></td></tr></table></figure>
 
@@ -554,7 +558,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-01 19:45:04" itemprop="dateModified" datetime="2022-05-01T19:45:04+08:00">2022-05-01</time>
+                <time title="修改时间：2022-05-01 23:10:33" itemprop="dateModified" datetime="2022-05-01T23:10:33+08:00">2022-05-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -804,7 +808,16 @@
 <ul>
 <li>监控、通知、自动故障转移、服务发现</li>
 </ul>
-<p>JedisSentinePool</p>
+<p><strong>哨兵</strong><br>JedisSentinePool</p>
+<p><strong>集群</strong><br>Redis Cluster</p>
+<ul>
+<li>数据自动分片（分成16384个Hash Slot）</li>
+<li>在部分节点失效时有一定的可用性</li>
+</ul>
+<p>JedisCluster</p>
+<ul>
+<li>Jedis 只从 Master 读数据，如果想要自动读写分离，可以定制</li>
+</ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 
