@@ -181,6 +181,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/09/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1SpirngBoot%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JQ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JQ的技术博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/09/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1SpirngBoot%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81/" class="post-title-link" itemprop="url">记录一次SpirngBoot项目版本冲突</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-09 17:23:11 / 修改时间：17:57:36" itemprop="dateCreated datePublished" datetime="2022-05-09T17:23:11+08:00">2022-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Debug/" itemprop="url" rel="index"><span itemprop="name">Debug</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>562</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="在使用-NotEmpty-注解，发起请求时出现以下错误："><a href="#在使用-NotEmpty-注解，发起请求时出现以下错误：" class="headerlink" title="在使用 @NotEmpty 注解，发起请求时出现以下错误："></a>在使用 @NotEmpty 注解，发起请求时出现以下错误：</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HV000030:No validator could be found for constraint &#x27;javax.validation.constraints.NotEmpty&#x27; validating type &#x27;java.lang.String&#x27;. Check configuration for &#x27;name&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotEmpty;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@ToString</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NewCoffeeRequest</span> &#123;</span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="keyword">private</span> Money price;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@NotEmpty 本身只支持String类型的，但报错，考虑到版本问题。</p>
+<p>查看 pom.xml 发现存在版本冲突。<br><img src="https://img2018.cnblogs.com/blog/280044/202001/280044-20200112172002066-1066604554.png"></p>
+<p>查看 spring boot 依赖的包版本。<br><img src="/2022/05/09/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1SpirngBoot%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81/1151652090011_.pic.jpg"></p>
+<p>发现时 2.0.1.Final，但 pom.xml 中指定为 1.1.0.Final ，因此将 pom.xml 改为 2.0.1.Final 即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/28/java8%E6%96%B0%E7%89%B9%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -608,7 +698,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-08 22:28:47" itemprop="dateModified" datetime="2022-05-08T22:28:47+08:00">2022-05-08</time>
+                <time title="修改时间：2022-05-09 11:01:58" itemprop="dateModified" datetime="2022-05-09T11:01:58+08:00">2022-05-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -626,14 +716,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>86k</span>
+              <span>87k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:18</span>
+              <span>1:19</span>
             </span>
 
         </div>
@@ -1233,11 +1323,45 @@
 <p>详细流程如下图。<br><img src="https://ask.qcloudimg.com/http-save/6296056/h8202u7yaw.png?imageView2/2/w/1620" alt="spring MVC 请求处理流程"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
+<h3 id="3、定义处理方法"><a href="#3、定义处理方法" class="headerlink" title="3、定义处理方法"></a>3、定义处理方法</h3><h4 id="定义映射关系"><a href="#定义映射关系" class="headerlink" title="定义映射关系"></a>定义映射关系</h4><p>@Controller <br>@RequestMapping</p>
+<ul>
+<li>path / method  指定映射路径与⽅法 </li>
+<li>params / headers 限定映射范围 </li>
+<li>consumes / produces 限定请求与响应格式 </li>
+</ul>
+<p>一些快捷⽅式 </p>
+<ul>
+<li>@RestController  </li>
+<li>@GetMapping / @PostMapping / @PutMapping / @DeleteMapping / @PatchMapping</li>
+</ul>
+<h4 id="定义处理方法"><a href="#定义处理方法" class="headerlink" title="定义处理方法"></a>定义处理方法</h4><ul>
+<li>@RequestBody / @ResponseBody / @ResponseStatus  </li>
+<li>@PathVariable / @RequestParam / @RequestHeader</li>
+<li>HttpEntity / ResponseEntity </li>
+</ul>
+<h4 id="定义类型转换"><a href="#定义类型转换" class="headerlink" title="定义类型转换"></a>定义类型转换</h4><p>⾃己实现 WebMvcConfigurer </p>
+<ul>
+<li>Spring Boot 在 WebMvcAutoConfiguration 中实现了一个 </li>
+<li>添加自定义的 Converter </li>
+<li>添加自定义的 Formatter</li>
+</ul>
+<h4 id="定义校验"><a href="#定义校验" class="headerlink" title="定义校验"></a>定义校验</h4><ul>
+<li>通过 Validator 对绑定结果进⾏行行校验 </li>
+<li>Hibernate Validator </li>
+<li>@Valid 注解 </li>
+<li>BindingResult  </li>
+</ul>
+<h4 id="Multipart-上传"><a href="#Multipart-上传" class="headerlink" title="Multipart 上传"></a>Multipart 上传</h4><ul>
+<li>配置 MultipartResolver  </li>
+<li>Spring Boot ⾃自动配置 MultipartAutoConfiguration </li>
+<li>⽀支持类型 multipart/form-data </li>
+<li>MultipartFile 类型</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h3 id="2、"><a href="#2、" class="headerlink" title="2、"></a>2、</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="2、-1"><a href="#2、-1" class="headerlink" title="2、"></a>2、</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="2、-2"><a href="#2、-2" class="headerlink" title="2、"></a>2、</h3>
+<h3 id="2、-1"><a href="#2、-1" class="headerlink" title="2、"></a>2、</h3>
       
     </div>
 
@@ -1872,127 +1996,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/%E6%9D%82%E9%A1%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JQ">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JQ的技术博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/08/%E6%9D%82%E9%A1%B9/" class="post-title-link" itemprop="url">杂项</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-08 11:37:43" itemprop="dateCreated datePublished" datetime="2022-04-08T11:37:43+08:00">2022-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-08 22:26:09" itemprop="dateModified" datetime="2022-05-08T22:26:09+08:00">2022-05-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><p>export 表示将该路径添加到环境变量中，打开 vim .zshrc ，添加jmeter的快速启动路径</p>
-<blockquote>
-<p>export JMETER_HOME=/usr/local/apache-jmeter-5.4.3<br>export PATH=$JAVA_HOME/bin:$PATH:.:$JMETER_HOME/bin:$PATH<br>export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JMETER_HOME/lib/ext/ApacheJMeter_core.jar:$JMETER_HOME/lib/jorphan.jar:$JMETER_HOME/lib/logkit-2.0.jar</p>
-</blockquote>
-<p>source .zshrc 使.zshrc生效。<br>使用 export -p 可以查看当前的环境中的路径。</p>
-<h3 id="alias"><a href="#alias" class="headerlink" title="alias"></a>alias</h3><p>alias 为指定路径起别名。</p>
-<blockquote>
-<p>export PATH=/usr/local/mysql/bin:$PATH<br>#快速启动、结束MySQL服务, 可以使用alias命令<br>alias mysqlstart=’sudo /usr/local/mysql/support-files/mysql.server start’<br>alias mysqlstop=’sudo /usr/local/mysql/support-files/mysql.server stop’</p>
-</blockquote>
-<hr>
-<h2 id="macOS目录的作用"><a href="#macOS目录的作用" class="headerlink" title="macOS目录的作用"></a>macOS目录的作用</h2><h3 id="系统硬件相关"><a href="#系统硬件相关" class="headerlink" title="系统硬件相关"></a>系统硬件相关</h3><p>/cores 内核转储文件存放目录。当一个进程崩溃时，如果系统允许则会产生转储文件。<br>/dev 设备文件存放目录，如何代表硬盘的/dev/disk0。<br>/Network 网络节点存放目录；<br>/Volumes 文件系统挂载点存放目录。</p>
-<h3 id="系统配置相关"><a href="#系统配置相关" class="headerlink" title="系统配置相关"></a>系统配置相关</h3><p>/etc. 标准unix系统配置文件存放目录，如用户密码文件/etc/passwd。此目录实际为指向/private/etc的链接。</p>
-<h3 id="系统程序相关"><a href="#系统程序相关" class="headerlink" title="系统程序相关"></a>系统程序相关</h3><p>/Applications 应用程序目录，默认所有的GUI应用程序都安装在这里；<br>/Library 系统的数据文件、帮助文件、文档等等；<br>/System 只包含一个名为Library的目录，这个子目录中存放了系统的绝大部分组件，如各种framework，以及内核模块，字体文件等等。</p>
-<h3 id="系统命令相关"><a href="#系统命令相关" class="headerlink" title="系统命令相关"></a>系统命令相关</h3><p>/bin 传统unix命令的存放目录，如ls，rm，mv等。<br>/sbin 传统unix管理类命令存放目录，如fdisk，ifconfig等等。</p>
-<h3 id="用户信息相关"><a href="#用户信息相关" class="headerlink" title="用户信息相关"></a>用户信息相关</h3><p>/Users 存放用户的个人资料和配置。每个用户有自己的单独目录。</p>
-<h3 id="用户经常使用"><a href="#用户经常使用" class="headerlink" title="用户经常使用"></a>用户经常使用</h3><p>/usr 第三方程序安装目录。<br>/usr/bin, /usr/sbin, /usr/lib，其中/usr/lib目录中存放了共享库（动态链接库）。<br>/var 存放经常变化的文件，如日志文件。此目录实际为指向/private/var的链接。</p>
-<p>/opt/homebrew brew安装的程序一般放这儿。</p>
-<p>/private 里面的子目录存放了/tmp, /var, /etc等链接目录的目标目录。<br>/tmp 临时文件存放目录，其权限为所有人任意读写。此目录实际为指向/private/tmp的链接。</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>/installer.failurerequests 可能是用来记录发生crash时的日志。</p>
-<hr>
-<h2 id="linux-命令拾遗"><a href="#linux-命令拾遗" class="headerlink" title="linux 命令拾遗"></a>linux 命令拾遗</h2><h3 id="lsof（list-open-files）"><a href="#lsof（list-open-files）" class="headerlink" title="lsof（list open files）"></a>lsof（list open files）</h3><p>lsof 列出当前系统打开文件的工具。lsof -i :8080 可以查看当前占用8080端口的进程。</p>
-<h3 id="ls（list）"><a href="#ls（list）" class="headerlink" title="ls（list）"></a>ls（list）</h3><p>ls默认情况下用来打印出当前目录的列表。</p>
-<hr>
-<h2 id="git流程"><a href="#git流程" class="headerlink" title="git流程"></a>git流程</h2><p>将写了一半的项目git到空github上。</p>
-<ol>
-<li>github上创建同名仓库</li>
-<li>git clone到本地</li>
-<li>将隐藏的.git文件复制到已经写了一半的project中</li>
-<li>git add .</li>
-<li>git status</li>
-<li>git commit -m “提交说明”</li>
-<li>git push</li>
-</ol>
-<hr>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2064,20 +2067,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2126,13 +2129,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">118k</span>
+    <span title="站点总字数">119k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:47</span>
+    <span title="站点阅读时长">1:48</span>
 </div>
 
         

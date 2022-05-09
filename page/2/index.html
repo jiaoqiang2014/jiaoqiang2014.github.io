@@ -181,6 +181,127 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/%E6%9D%82%E9%A1%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JQ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JQ的技术博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/08/%E6%9D%82%E9%A1%B9/" class="post-title-link" itemprop="url">杂项</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-08 11:37:43" itemprop="dateCreated datePublished" datetime="2022-04-08T11:37:43+08:00">2022-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-05-08 22:26:09" itemprop="dateModified" datetime="2022-05-08T22:26:09+08:00">2022-05-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E9%A1%B9/" itemprop="url" rel="index"><span itemprop="name">杂项</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><p>export 表示将该路径添加到环境变量中，打开 vim .zshrc ，添加jmeter的快速启动路径</p>
+<blockquote>
+<p>export JMETER_HOME=/usr/local/apache-jmeter-5.4.3<br>export PATH=$JAVA_HOME/bin:$PATH:.:$JMETER_HOME/bin:$PATH<br>export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JMETER_HOME/lib/ext/ApacheJMeter_core.jar:$JMETER_HOME/lib/jorphan.jar:$JMETER_HOME/lib/logkit-2.0.jar</p>
+</blockquote>
+<p>source .zshrc 使.zshrc生效。<br>使用 export -p 可以查看当前的环境中的路径。</p>
+<h3 id="alias"><a href="#alias" class="headerlink" title="alias"></a>alias</h3><p>alias 为指定路径起别名。</p>
+<blockquote>
+<p>export PATH=/usr/local/mysql/bin:$PATH<br>#快速启动、结束MySQL服务, 可以使用alias命令<br>alias mysqlstart=’sudo /usr/local/mysql/support-files/mysql.server start’<br>alias mysqlstop=’sudo /usr/local/mysql/support-files/mysql.server stop’</p>
+</blockquote>
+<hr>
+<h2 id="macOS目录的作用"><a href="#macOS目录的作用" class="headerlink" title="macOS目录的作用"></a>macOS目录的作用</h2><h3 id="系统硬件相关"><a href="#系统硬件相关" class="headerlink" title="系统硬件相关"></a>系统硬件相关</h3><p>/cores 内核转储文件存放目录。当一个进程崩溃时，如果系统允许则会产生转储文件。<br>/dev 设备文件存放目录，如何代表硬盘的/dev/disk0。<br>/Network 网络节点存放目录；<br>/Volumes 文件系统挂载点存放目录。</p>
+<h3 id="系统配置相关"><a href="#系统配置相关" class="headerlink" title="系统配置相关"></a>系统配置相关</h3><p>/etc. 标准unix系统配置文件存放目录，如用户密码文件/etc/passwd。此目录实际为指向/private/etc的链接。</p>
+<h3 id="系统程序相关"><a href="#系统程序相关" class="headerlink" title="系统程序相关"></a>系统程序相关</h3><p>/Applications 应用程序目录，默认所有的GUI应用程序都安装在这里；<br>/Library 系统的数据文件、帮助文件、文档等等；<br>/System 只包含一个名为Library的目录，这个子目录中存放了系统的绝大部分组件，如各种framework，以及内核模块，字体文件等等。</p>
+<h3 id="系统命令相关"><a href="#系统命令相关" class="headerlink" title="系统命令相关"></a>系统命令相关</h3><p>/bin 传统unix命令的存放目录，如ls，rm，mv等。<br>/sbin 传统unix管理类命令存放目录，如fdisk，ifconfig等等。</p>
+<h3 id="用户信息相关"><a href="#用户信息相关" class="headerlink" title="用户信息相关"></a>用户信息相关</h3><p>/Users 存放用户的个人资料和配置。每个用户有自己的单独目录。</p>
+<h3 id="用户经常使用"><a href="#用户经常使用" class="headerlink" title="用户经常使用"></a>用户经常使用</h3><p>/usr 第三方程序安装目录。<br>/usr/bin, /usr/sbin, /usr/lib，其中/usr/lib目录中存放了共享库（动态链接库）。<br>/var 存放经常变化的文件，如日志文件。此目录实际为指向/private/var的链接。</p>
+<p>/opt/homebrew brew安装的程序一般放这儿。</p>
+<p>/private 里面的子目录存放了/tmp, /var, /etc等链接目录的目标目录。<br>/tmp 临时文件存放目录，其权限为所有人任意读写。此目录实际为指向/private/tmp的链接。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>/installer.failurerequests 可能是用来记录发生crash时的日志。</p>
+<hr>
+<h2 id="linux-命令拾遗"><a href="#linux-命令拾遗" class="headerlink" title="linux 命令拾遗"></a>linux 命令拾遗</h2><h3 id="lsof（list-open-files）"><a href="#lsof（list-open-files）" class="headerlink" title="lsof（list open files）"></a>lsof（list open files）</h3><p>lsof 列出当前系统打开文件的工具。lsof -i :8080 可以查看当前占用8080端口的进程。</p>
+<h3 id="ls（list）"><a href="#ls（list）" class="headerlink" title="ls（list）"></a>ls（list）</h3><p>ls默认情况下用来打印出当前目录的列表。</p>
+<hr>
+<h2 id="git流程"><a href="#git流程" class="headerlink" title="git流程"></a>git流程</h2><p>将写了一半的项目git到空github上。</p>
+<ol>
+<li>github上创建同名仓库</li>
+<li>git clone到本地</li>
+<li>将隐藏的.git文件复制到已经写了一半的project中</li>
+<li>git add .</li>
+<li>git status</li>
+<li>git commit -m “提交说明”</li>
+<li>git push</li>
+</ol>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/06/hexo%20github%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -357,20 +478,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -419,13 +540,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">118k</span>
+    <span title="站点总字数">119k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:47</span>
+    <span title="站点阅读时长">1:48</span>
 </div>
 
         
