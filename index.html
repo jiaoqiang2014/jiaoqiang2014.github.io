@@ -807,7 +807,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-08 20:03:00" itemprop="dateModified" datetime="2022-06-08T20:03:00+08:00">2022-06-08</time>
+                <time title="修改时间：2022-06-09 21:59:42" itemprop="dateModified" datetime="2022-06-09T21:59:42+08:00">2022-06-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -825,14 +825,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>100k</span>
+              <span>102k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:31</span>
+              <span>1:32</span>
             </span>
 
         </div>
@@ -1629,15 +1629,123 @@
 <li>创建⼀个带 @Configuration 的 WebMvcConfigurer 配置类 </li>
 <li>不能带 @EnableWebMvc（想彻底⾃己控制 MVC 配置除外）</li>
 </ul>
-<h4 id><a href="#" class="headerlink" title></a></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p><a target="_blank" rel="noopener" href="https://jiaoqiang2014.github.io/2022/04/15/SpringMVC%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8-1/">SpringMVC实现拦截器-1</a></p>
+<p><a target="_blank" rel="noopener" href="https://jiaoqiang2014.github.io/2022/06/08/SpringMVC%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8-2/">SpringMVC实现拦截器_2</a></p>
+<h2 id="第七章-访问-Web-资源"><a href="#第七章-访问-Web-资源" class="headerlink" title="第七章 访问 Web 资源"></a>第七章 访问 Web 资源</h2><h3 id="通过-RestTemplate-访问-Web-资源"><a href="#通过-RestTemplate-访问-Web-资源" class="headerlink" title="通过 RestTemplate 访问 Web 资源"></a>通过 RestTemplate 访问 Web 资源</h3><ul>
+<li>Spring Boot 中没有自动配置 RestTemplate</li>
+<li>Spring Boot 提供了 RestTemplateBuilder<ul>
+<li>RestTemplateBuilder.build()</li>
+</ul>
+</li>
+</ul>
+<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><p>GET 请求</p>
+<ul>
+<li>getForObject() / getForEntity()</li>
+</ul>
+<p>POST 请求</p>
+<ul>
+<li>postForObject() / postForEntity()</li>
+</ul>
+<p>PUT 请求</p>
+<ul>
+<li>put()</li>
+</ul>
+<p>DELETE 请求</p>
+<ul>
+<li>delete()</li>
+</ul>
+<h4 id="构造-URI"><a href="#构造-URI" class="headerlink" title="构造 URI"></a>构造 URI</h4><p>构造 URI</p>
+<ul>
+<li>UriComponentsBuilder</li>
+</ul>
+<p>构造相对于当前请求的 URI</p>
+<ul>
+<li>ServletUriComponentsBuilder</li>
+</ul>
+<p>构造 Controller 的 URI</p>
+<ul>
+<li>MvcUriComponentBuilder</li>
+</ul>
+<h3 id="RestTemplate-的高阶用法"><a href="#RestTemplate-的高阶用法" class="headerlink" title="RestTemplate 的高阶用法"></a>RestTemplate 的高阶用法</h3><h3 id="简单定制-RestTemplate"><a href="#简单定制-RestTemplate" class="headerlink" title="简单定制 RestTemplate"></a>简单定制 RestTemplate</h3><h3 id="通过-WebClient-访问-Web-资源"><a href="#通过-WebClient-访问-Web-资源" class="headerlink" title="通过 WebClient 访问 Web 资源"></a>通过 WebClient 访问 Web 资源</h3><h4 id="了解-WebClient"><a href="#了解-WebClient" class="headerlink" title="了解 WebClient"></a>了解 WebClient</h4><p>WebClient 是一个以 Reactive 方式处理 HTTP 请求的非阻塞式的客户端。</p>
+<p><strong>支持的底层 HTTP 库</strong></p>
+<ul>
+<li>Reactor Netty - ReactorClientHttpConnector</li>
+<li>Jetty ReactiveStream HttpClient - JettyClientHttpConnector</li>
+</ul>
+<p><strong>创建 WebClient</strong></p>
+<ul>
+<li>WebClient.create()</li>
+<li>WebClient.builder()</li>
+</ul>
+<p><strong>发起请求</strong></p>
+<ul>
+<li>get() / post() / put() / delete() / patch()</li>
+</ul>
+<p><strong>获得结果</strong></p>
+<ul>
+<li>retrieve() / exchange()</li>
+</ul>
+<p><strong>处理 HTTP Status</strong></p>
+<ul>
+<li>onStatus()</li>
+</ul>
+<p><strong>应答正文</strong></p>
+<ul>
+<li>bodyToMono() / bodyToFlux()</li>
+</ul>
+<h2 id="第八章-Web-开发进阶"><a href="#第八章-Web-开发进阶" class="headerlink" title="第八章 Web 开发进阶"></a>第八章 Web 开发进阶</h2><h3 id="设计好的-RESTful-Web-Service"><a href="#设计好的-RESTful-Web-Service" class="headerlink" title="设计好的 RESTful Web Service"></a>设计好的 RESTful Web Service</h3><p>“REST 提供了一组架构约束，当作为一个整体来应用时，强调组件交互的可伸缩性、接口的通⽤性、组件的独⽴部署、以及用来减少交互延迟、增强安全性、封装遗留系统的中间组件。” - Roy Thomas Fielding</p>
+<h3 id="认识-HTTP-⽅方法"><a href="#认识-HTTP-⽅方法" class="headerlink" title="认识 HTTP ⽅方法"></a>认识 HTTP ⽅方法</h3><p>安全是指不改变资源，幂等是指多次请求产生的效果一样。</p>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>安全 / 幂等</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td>Y / Y</td>
+<td>信息获取</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>N / N</td>
+<td>该⽅法⽤途广泛，可⽤用于创建、更新或一次性对多个资源进⾏修改</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>N / Y</td>
+<td>删除资源</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>N / Y</td>
+<td>更新或者完全替换⼀个资源</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td>Y / Y</td>
+<td>获取与 GET ⼀样的 HTTP 头信息，但没有响应体</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>Y / Y</td>
+<td>获取资源支持的 HTTP 方法列表</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td>Y / Y</td>
+<td>让服务器返回其收到的 HTTP 头</td>
+</tr>
+</tbody></table>
+<h3 id="HATEOAS"><a href="#HATEOAS" class="headerlink" title="HATEOAS"></a>HATEOAS</h3><h3 id="使用-Spring-Data-REST-实现简单的超媒体服务"><a href="#使用-Spring-Data-REST-实现简单的超媒体服务" class="headerlink" title="使用 Spring Data REST 实现简单的超媒体服务"></a>使用 Spring Data REST 实现简单的超媒体服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="-1"><a href="#-1" class="headerlink" title></a></h2>
       
     </div>
 
@@ -2312,13 +2420,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">137k</span>
+    <span title="站点总字数">138k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:04</span>
+    <span title="站点阅读时长">2:05</span>
 </div>
 
         
