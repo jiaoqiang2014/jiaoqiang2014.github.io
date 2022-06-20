@@ -181,114 +181,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/08/SpringMVC%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JQ">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JQ的技术博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/08/SpringMVC%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8-2/" class="post-title-link" itemprop="url">SpringMVC实现拦截器_2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-08 20:03:59" itemprop="dateCreated datePublished" datetime="2022-06-08T20:03:59+08:00">2022-06-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-09 15:55:39" itemprop="dateModified" datetime="2022-06-09T15:55:39+08:00">2022-06-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringMVC-%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">SpringMVC 系列</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="使用拦截器实现日志功能"><a href="#使用拦截器实现日志功能" class="headerlink" title="使用拦截器实现日志功能"></a>使用拦截器实现日志功能</h2><p>实现一个执行 controller 时能够输出相应的执行时间。</p>
-<p>输出例子如下：<br>“URI;methed;status;_;xxms;xxms;xxms”</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/coffee/4;com.example.springmvc.controller.CoffeeController.getById;200;_,227ms;227ms;0ms</span><br></pre></td></tr></table></figure>
-
-<h2 id="实现拦截器"><a href="#实现拦截器" class="headerlink" title="实现拦截器"></a>实现拦截器</h2><ul>
-<li>重写<code>HandlerInterceptor</code>类的<code>preHandle</code>、<code>postHandle</code>和<code>afterCompletion</code>方法。</li>
-<li>注册拦截器</li>
-</ul>
-<h3 id="重写HandlerInterceptor类中的方法"><a href="#重写HandlerInterceptor类中的方法" class="headerlink" title="重写HandlerInterceptor类中的方法"></a>重写<code>HandlerInterceptor</code>类中的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PerformanceInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ThreadLocal&lt;StopWatch&gt; stopWatch = <span class="keyword">new</span> <span class="title class_">ThreadLocal</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">StopWatch</span> <span class="variable">sw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StopWatch</span>();</span><br><span class="line">        stopWatch.set(sw);</span><br><span class="line">        sw.start();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, <span class="meta">@Nullable</span> ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        stopWatch.get().stop();</span><br><span class="line">        stopWatch.get().start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 请求处理完成后的回调，即渲染视图后。</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, <span class="meta">@Nullable</span> Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">StopWatch</span> <span class="variable">sw</span> <span class="operator">=</span> stopWatch.get();</span><br><span class="line">        sw.stop();</span><br><span class="line">        <span class="type">String</span> <span class="variable">method</span> <span class="operator">=</span> handler.getClass().getSimpleName();</span><br><span class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> HandlerMethod)&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">beanType</span> <span class="operator">=</span> ((HandlerMethod) handler).getBeanType().getName();</span><br><span class="line">            <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> ((HandlerMethod) handler).getMethod().getName();</span><br><span class="line">            method = beanType + <span class="string">&quot;.&quot;</span> + methodName;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        log.info(<span class="string">&quot;&#123;&#125;;&#123;&#125;;&#123;&#125;;&#123;&#125;,&#123;&#125;ms;&#123;&#125;ms;&#123;&#125;ms&quot;</span>, request.getRequestURI(), method, response.getStatus(),</span><br><span class="line">                ex == <span class="literal">null</span> ? <span class="string">&quot;_&quot;</span> : ex.getClass().getSimpleName(),</span><br><span class="line">                sw.getTotalTimeMillis(), sw.getTotalTimeMillis() - sw.getLastTaskTimeMillis(),</span><br><span class="line">                sw.getLastTaskTimeMillis());</span><br><span class="line">        stopWatch.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="注册拦截器"><a href="#注册拦截器" class="headerlink" title="注册拦截器"></a>注册拦截器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    PerformanceInterceptor performanceInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 注册拦截器</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 使用 performanceInterceptor 中配置的拦截器，拦截路径为 &quot;/coffee/**&quot; 和 &quot;/order/**&quot; 的请求。</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        registry.addInterceptor(performanceInterceptor).addPathPatterns(<span class="string">&quot;/coffee/**&quot;</span>).addPathPatterns(<span class="string">&quot;/order/**&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="指定使用-Json-输出，使用上海时间"><a href="#指定使用-Json-输出，使用上海时间" class="headerlink" title="指定使用 Json 输出，使用上海时间"></a>指定使用 Json 输出，使用上海时间</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 设置 json 输出缩紧，使用上海时间，使用 curl 请求测试。</span></span><br><span class="line"><span class="comment">* 测试方法：curl http://localhost:8080/coffee/4</span></span><br><span class="line"><span class="comment">* 测试结果如下：</span></span><br><span class="line"><span class="comment">jq@JQmac blog % curl http://localhost:8080/coffee/4</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;id&quot; : 4,</span></span><br><span class="line"><span class="comment">  &quot;createTime&quot; : &quot;2022-06-08T17:41:26.955+08:00&quot;,</span></span><br><span class="line"><span class="comment">  &quot;updateTime&quot; : &quot;2022-06-08T17:41:26.955+08:00&quot;,</span></span><br><span class="line"><span class="comment">  &quot;name&quot; : &quot;mocha&quot;,</span></span><br><span class="line"><span class="comment">  &quot;price&quot; : 30.00</span></span><br><span class="line"><span class="comment">&#125;% </span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> Jackson2ObjectMapperBuilderCustomizer <span class="title function_">jacksonBuilderCustomizer</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> builder -&gt; &#123;</span><br><span class="line">        builder.indentOutput(<span class="literal">true</span>);</span><br><span class="line">        builder.timeZone(TimeZone.getTimeZone(<span class="string">&quot;Asia/Shanghai&quot;</span>));</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>在terminal中的输出为：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/coffee/4;com.example.springmvc.controller.CoffeeController.getById;200;_,227ms;227ms;0ms</span><br></pre></td></tr></table></figure>
-
-<h3 id="一个关于-StopWatch-的实例"><a href="#一个关于-StopWatch-的实例" class="headerlink" title="一个关于 StopWatch 的实例"></a>一个关于 StopWatch 的实例</h3><p><code>StopWatch</code>类实现一个简单的秒表，允许对多个任务进行计时，显示每个命名任务的总运行时间和运行时间。隐藏 System.nanoTime() 的使用，提高应用程序代码的可读性并降低计算错误的可能性。<br><strong>请注意</strong> 此对象并非设计为线程安全的，也不使用同步。此类通常用于在概念验证工作和开发过程中验证性能，而不是作为生产应用程序的一部分。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.util.StopWatch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestStopWatch</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="type">StopWatch</span> <span class="variable">sw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StopWatch</span>();</span><br><span class="line"></span><br><span class="line">        sw.start(<span class="string">&quot;起床&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        sw.stop();</span><br><span class="line"></span><br><span class="line">        sw.start(<span class="string">&quot;洗漱&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        sw.stop();</span><br><span class="line"></span><br><span class="line">        sw.start(<span class="string">&quot;锁门&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        sw.stop();</span><br><span class="line"></span><br><span class="line">        System.out.println(sw.prettyPrint());</span><br><span class="line">        System.out.println(<span class="string">&quot;-------------------&quot;</span>);</span><br><span class="line">        System.out.println(sw.getTotalTimeMillis());</span><br><span class="line">        System.out.println(sw.getLastTaskName());</span><br><span class="line">        System.out.println(sw.getLastTaskInfo());</span><br><span class="line">        System.out.println(sw.getTaskCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String []argv)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="type">TestStopWatch</span> <span class="variable">testStopWatch</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestStopWatch</span>();</span><br><span class="line">        testStopWatch.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="输出为："><a href="#输出为：" class="headerlink" title="输出为："></a>输出为：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">StopWatch <span class="string">&#x27;&#x27;</span>: running time (millis) = 3512</span><br><span class="line">-----------------------------------------</span><br><span class="line">ms     %     Task name</span><br><span class="line">-----------------------------------------</span><br><span class="line">01005  029%  起床</span><br><span class="line">02005  057%  洗漱</span><br><span class="line">00502  014%  锁门</span><br><span class="line"></span><br><span class="line">-------------------</span><br><span class="line">3512</span><br><span class="line">锁门</span><br><span class="line">org.springframework.util.StopWatch<span class="variable">$TaskInfo</span>@24d46ca6</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/09/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1SpirngBoot%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -807,7 +699,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-09 21:59:42" itemprop="dateModified" datetime="2022-06-09T21:59:42+08:00">2022-06-09</time>
+                <time title="修改时间：2022-06-20 12:19:28" itemprop="dateModified" datetime="2022-06-20T12:19:28+08:00">2022-06-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -825,14 +717,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>102k</span>
+              <span>108k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:32</span>
+              <span>1:38</span>
             </span>
 
         </div>
@@ -1739,7 +1631,268 @@
 <td>让服务器返回其收到的 HTTP 头</td>
 </tr>
 </tbody></table>
-<h3 id="HATEOAS"><a href="#HATEOAS" class="headerlink" title="HATEOAS"></a>HATEOAS</h3><h3 id="使用-Spring-Data-REST-实现简单的超媒体服务"><a href="#使用-Spring-Data-REST-实现简单的超媒体服务" class="headerlink" title="使用 Spring Data REST 实现简单的超媒体服务"></a>使用 Spring Data REST 实现简单的超媒体服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="HATEOAS"><a href="#HATEOAS" class="headerlink" title="HATEOAS"></a>HATEOAS</h3><h3 id="使用-Spring-Data-REST-实现简单的超媒体服务"><a href="#使用-Spring-Data-REST-实现简单的超媒体服务" class="headerlink" title="使用 Spring Data REST 实现简单的超媒体服务"></a>使用 Spring Data REST 实现简单的超媒体服务</h3><h4 id="认识-HAL"><a href="#认识-HAL" class="headerlink" title="认识 HAL"></a>认识 HAL</h4><ul>
+<li>Hypertext Application Language<br>HAL 是一种简单的格式，为 API 中的资源提供简单一致的链接 </li>
+</ul>
+<h4 id="HAL-模型"><a href="#HAL-模型" class="headerlink" title="HAL 模型"></a>HAL 模型</h4><ul>
+<li>链接 </li>
+<li>内嵌资源 </li>
+<li>状态</li>
+</ul>
+<h3 id="Spring-Data-REST"><a href="#Spring-Data-REST" class="headerlink" title="Spring Data REST"></a>Spring Data REST</h3><p>Spring Boot 依赖 </p>
+<ul>
+<li>spring-boot-starter-data-rest</li>
+</ul>
+<p>常用注解与类 </p>
+<ul>
+<li>@RepositoryRestResource  </li>
+<li>Resource<T>  </T></li>
+<li>PagedResource<T> </T></li>
+</ul>
+<h3 id="如何访问-HATEOAS-服务"><a href="#如何访问-HATEOAS-服务" class="headerlink" title="如何访问 HATEOAS 服务"></a>如何访问 HATEOAS 服务</h3><p>配置 Jackson JSON </p>
+<ul>
+<li>注册 HAL ⽀支持 </li>
+</ul>
+<p>操作超链接 </p>
+<ul>
+<li>找到需要的 Link </li>
+<li>访问超链接</li>
+</ul>
+<h3 id="分布式环境中如何解决-Session-的问题"><a href="#分布式环境中如何解决-Session-的问题" class="headerlink" title="分布式环境中如何解决 Session 的问题"></a>分布式环境中如何解决 Session 的问题</h3><ul>
+<li>粘性会话 Sticky Session </li>
+<li>会话复制 Session Replication </li>
+<li>集中会话 Centralized Session</li>
+</ul>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p>定制 HttpSession </p>
+<ul>
+<li>通过定制的 HttpServletRequest 返回定制的 HttpSession </li>
+<li>SessionRepositoryRequestWrapper  </li>
+<li>SessionRepositoryFilter  </li>
+<li>DelegatingFilterProxy </li>
+</ul>
+<h4 id="基于-Redis-的-HttpSession"><a href="#基于-Redis-的-HttpSession" class="headerlink" title="基于 Redis 的 HttpSession"></a>基于 Redis 的 HttpSession</h4><p>引⼊依赖 </p>
+<ul>
+<li>spring-session-data-redis </li>
+</ul>
+<p>基本配置 </p>
+<ul>
+<li>@EnableRedisHttpSession  </li>
+<li>提供 RedisConnectionFactory </li>
+<li>实现 AbstractHttpSessionApplicationInitializer  <ul>
+<li>配置 DelegatingFilterProxy</li>
+</ul>
+</li>
+</ul>
+<h4 id="Spring-Boot-对-Spring-Session-的⽀持"><a href="#Spring-Boot-对-Spring-Session-的⽀持" class="headerlink" title="Spring Boot 对 Spring Session 的⽀持"></a>Spring Boot 对 Spring Session 的⽀持</h4><p>application.properties </p>
+<ul>
+<li>spring.session.store-type=redis  <ul>
+<li>spring.session.timeout=  </li>
+</ul>
+</li>
+<li>server.servlet.session.timeout=  </li>
+<li>spring.session.redis.flush-mode=on-save  </li>
+<li>spring.session.redis.namespace=spring:session </li>
+</ul>
+<h3 id="使用-WebFlux-代替-Spring-MVC"><a href="#使用-WebFlux-代替-Spring-MVC" class="headerlink" title="使用 WebFlux 代替 Spring MVC"></a>使用 WebFlux 代替 Spring MVC</h3><h4 id="认识-WebFlux"><a href="#认识-WebFlux" class="headerlink" title="认识 WebFlux"></a>认识 WebFlux</h4><p>什么是 WebFlux </p>
+<ul>
+<li>用于构建基于 Reactive 技术栈之上的 Web 应用程序 </li>
+<li>基于 Reactive Streams API ，运行在非阻塞服务器上 </li>
+</ul>
+<p>为什么会有 WebFlux </p>
+<ul>
+<li>对于⾮阻塞 Web 应⽤的需要 </li>
+<li>函数式编程</li>
+</ul>
+<p>关于 WebFlux 的性能 </p>
+<ul>
+<li>请求的耗时并不不会有很大的改善 </li>
+<li>仅需少量固定数量的线程和较少的内存即可实现扩展 </li>
+</ul>
+<h4 id="WebMVC-v-s-WebFlux"><a href="#WebMVC-v-s-WebFlux" class="headerlink" title="WebMVC v.s. WebFlux"></a>WebMVC v.s. WebFlux</h4><ul>
+<li>已有 Spring MVC 应用，运行正常，就别改了</li>
+<li>依赖了⼤量阻塞式持久化 API 和⽹络 API，建议使用 Spring MVC </li>
+<li>已经使用了非阻塞技术栈，可以考虑使用 WebFlux </li>
+<li>想要使用 Java 8 Lambda 结合轻量级函数式框架，可以考虑 WebFlux</li>
+</ul>
+<h4 id="WebFlux-中的编程模型"><a href="#WebFlux-中的编程模型" class="headerlink" title="WebFlux 中的编程模型"></a>WebFlux 中的编程模型</h4><ul>
+<li>基于注解的控制器</li>
+<li>函数式 Endpoints </li>
+</ul>
+<h4 id="基于注解的控制器器"><a href="#基于注解的控制器器" class="headerlink" title="基于注解的控制器器"></a>基于注解的控制器器</h4><p>常用注解 </p>
+<ul>
+<li>@Controller  </li>
+<li>@RequestMapping 及其等价注解 </li>
+<li>@RequestBody / @ResponseBody</li>
+</ul>
+<p>返回值 </p>
+<ul>
+<li>Mono<T> / Flux<T> </T></T></li>
+</ul>
+<h2 id="第九章-重新认识-Spring-Boot"><a href="#第九章-重新认识-Spring-Boot" class="headerlink" title="第九章 重新认识 Spring Boot"></a>第九章 重新认识 Spring Boot</h2><p>Spring Boot 四大核心</p>
+<ul>
+<li>自动配置 - Auto Configuration</li>
+<li>起步依赖 - Starter Dependency</li>
+<li>命令行界面 - Spring Boot CLI</li>
+<li>Actuator</li>
+</ul>
+<h3 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h3><ul>
+<li>基于添加的 JAR 依赖⾃动对 Spring Boot 应⽤程序进⾏配置</li>
+<li>自动配置都在类 spring-boot-autoconﬁguration 中</li>
+</ul>
+<p>开启⾃动配置</p>
+<ul>
+<li>@EnableAutoConfiguration <ul>
+<li>exclude = Class&lt;?&gt;[] </li>
+</ul>
+</li>
+<li>@SpringBootApplication</li>
+</ul>
+<p>@SpringBootApplication 注解中包含了 @EnableAutoConﬁguration</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7046554366068654094#heading-17">一文搞懂🔥SpringBoot自动配置原理</a></p>
+<h3 id="⾃动配置的实现原理"><a href="#⾃动配置的实现原理" class="headerlink" title="⾃动配置的实现原理"></a>⾃动配置的实现原理</h3><p>@EnableAutoConﬁguration</p>
+<ul>
+<li>AutoConfigurationImportSelector</li>
+<li>META-INF/spring.factories<ul>
+<li>org.springframework.boot.autoconfigure.EnableAutoConfiguration</li>
+</ul>
+</li>
+</ul>
+<p>条件注解</p>
+<ul>
+<li>@Conditional</li>
+<li>@ConditionalOnClass</li>
+<li>@ConditionalOnBean</li>
+<li>@ConditionalOnMissingBean</li>
+<li>@ConditionalOnProperty</li>
+<li>……</li>
+</ul>
+<h3 id="观察⾃动配置的判断结果"><a href="#观察⾃动配置的判断结果" class="headerlink" title="观察⾃动配置的判断结果"></a>观察⾃动配置的判断结果</h3><ul>
+<li>–debug</li>
+</ul>
+<p>这个结果是通过 ConditionEvaluationReportLoggingListener 输出的。</p>
+<h4 id="ConditionEvaluationReportLoggingListener"><a href="#ConditionEvaluationReportLoggingListener" class="headerlink" title="ConditionEvaluationReportLoggingListener"></a>ConditionEvaluationReportLoggingListener</h4><ul>
+<li>Positive matches</li>
+<li>Negative matches</li>
+<li>Exclusions</li>
+<li>Unconditional classes</li>
+</ul>
+<h3 id="动⼿实现⾃⼰的⾃动配置"><a href="#动⼿实现⾃⼰的⾃动配置" class="headerlink" title="动⼿实现⾃⼰的⾃动配置"></a>动⼿实现⾃⼰的⾃动配置</h3><p>1、编写 Java Conﬁg</p>
+<ul>
+<li>@Configuration</li>
+</ul>
+<p>2、添加条件</p>
+<ul>
+<li>@Conditional</li>
+</ul>
+<p>3、定位⾃动配置</p>
+<ul>
+<li>META-INF/spring.factories</li>
+</ul>
+<h4 id="条件注解⼤家庭"><a href="#条件注解⼤家庭" class="headerlink" title="条件注解⼤家庭"></a>条件注解⼤家庭</h4><p><strong>条件注解</strong></p>
+<ul>
+<li>@Conditional</li>
+</ul>
+<p><strong>类条件</strong></p>
+<ul>
+<li>@ConditionalOnClass</li>
+</ul>
+<p>当存在一个类时会做什么</p>
+<ul>
+<li>@ConditionalOnMissingClass</li>
+</ul>
+<p>当不存在一个类时会做什么</p>
+<p><strong>属性条件</strong></p>
+<ul>
+<li>@ConditionalOnProperty</li>
+</ul>
+<p>可以使用@ConditionalOnProperty注解来控制@Configuration是否生效.</p>
+<p>通过其两个属性name以及havingValue来实现的，其中name用来从application.properties中读取某个属性值。<br>如果该值为空，则返回false;<br>如果值不为空，则将该值与havingValue指定的值进行比较，如果一样则返回true;否则返回false。<br>如果返回值为false，则该configuration不生效；为true则生效。<br><strong>Bean 条件</strong></p>
+<ul>
+<li>@ConditionalOnBean</li>
+</ul>
+<p>存在某个 Bean 时做什么。</p>
+<ul>
+<li>@ConditionalOnMissingBean</li>
+</ul>
+<p>存在某个 Bean 时做什么。</p>
+<ul>
+<li>@ConditionalOnSingleCandidate</li>
+</ul>
+<p>上下文中存在一个 Bean 是做什么。</p>
+<p><strong>资源条件</strong></p>
+<ul>
+<li>@ConditionalOnResource</li>
+</ul>
+<p><strong>Web 应⽤条件</strong></p>
+<ul>
+<li>@ConditionalOnWebApplication</li>
+<li>@ConditionalOnNotWebApplication</li>
+</ul>
+<p><strong>其他条件</strong></p>
+<ul>
+<li>@ConditionalOnExpression</li>
+<li>@ConditionalOnJava</li>
+<li>@ConditionalOnJndi</li>
+</ul>
+<h4 id="⾃动配置的执⾏顺序"><a href="#⾃动配置的执⾏顺序" class="headerlink" title="⾃动配置的执⾏顺序"></a>⾃动配置的执⾏顺序</h4><ul>
+<li>@AutoConfigureBefore</li>
+</ul>
+<p>指定该自动配置类在某些配置执行之前执行。</p>
+<ul>
+<li>@AutoConfigureAfter</li>
+</ul>
+<p>指定该自动配置类在某些配置执行之后执行。</p>
+<ul>
+<li>@AutoConfigureOrder</li>
+</ul>
+<p>指定该自动配置类的执行顺序。</p>
+<h4 id="动⼿实现⾃⼰的⾃动配置代码"><a href="#动⼿实现⾃⼰的⾃动配置代码" class="headerlink" title="动⼿实现⾃⼰的⾃动配置代码"></a>动⼿实现⾃⼰的⾃动配置代码</h4><p><a target="_blank" rel="noopener" href="https://github.com/geektime-geekbang/geektime-spring-family/tree/master/Chapter%209">代码</a></p>
+<p>在类 AutoconfigureDemoApplication 启动时，自动实现 geektime 的自动配置。</p>
+<p>首先创建一个主工程 autoconfigure-demo，完成对它的自动配置。创建两个模块 geektime 和 geektime-spring-boot-autoconfigure ，通过 geektime-spring-boot-autoconfigure 实现对 geektime 的自动配置。</p>
+<p><strong>在 autoconfigure-demo 的 pom 中引入 对 geektime-spring-boot-autoconfigure 和 geektime 的依赖</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>geektime<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.geektimeAutoconfigure<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>geektime-spring-boot-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>在 geektime 中写一些简单的代码，代表需要自动配置的内容</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.geektime;</span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GreetingApplicationRunner</span> <span class="keyword">implements</span> <span class="title class_">ApplicationRunner</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">GreetingApplicationRunner</span><span class="params">()</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>(<span class="string">&quot;Greeting&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">GreetingApplicationRunner</span><span class="params">(String name)</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">		log.info(<span class="string">&quot;Initializing GreetingApplicationRunner for &#123;&#125;.&quot;</span>, name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(ApplicationArguments args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		log.info(<span class="string">&quot;Hello everyone! We all like Spring!&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>实现真正的自动配置类</strong> <br>首先，引入对 geektime 的依赖</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;com&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;geektime&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;<span class="number">0.0</span><span class="number">.1</span>-SNAPSHOT&lt;/version&gt;</span><br><span class="line">	&lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后，在 META-INF/spring.factories 中将 eektime-spring-boot-autoconfigure 添加进去。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>=<span class="string">\</span></span><br><span class="line"><span class="string">com.geektimeAutoconfigure.GreetingAutoConfiguration</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来，实现具体的自动配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.geektimeAutoconfigure;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">// 只用当 classPath 中存在 GreetingApplicationRunner.class 的时候才会生效。</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(GreetingApplicationRunner.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GreetingAutoConfiguration</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line"><span class="comment">//     在GreetingApplicationRunner 上下文不存在这样一个Bean的时候才会继续下面操作。</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean(GreetingApplicationRunner.class)</span></span><br><span class="line">    <span class="comment">// 判断 greeting.enabled 的属性，当值为 true 时才会生效，matchIfMissing = true 表示当 greeting.enabled 没有配置时，默认值也为 true。</span></span><br><span class="line">	<span class="comment">// greeting.enabled 可以在配置文件中添加：greeting.enabled=true。注意是 autoconfigure-demo 中的配置文件。</span></span><br><span class="line">    <span class="meta">@ConditionalOnProperty(name = &quot;greeting.enabled&quot;, havingValue = &quot;true&quot;, matchIfMissing = true)</span></span><br><span class="line">    <span class="keyword">public</span> GreetingApplicationRunner <span class="title function_">GreetingAutoConfiguration</span><span class="params">()</span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;new a GreetingApplicationRunner&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">GreetingApplicationRunner</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c.e.a.AutoconfigureDemoApplication       : No active profile <span class="built_in">set</span>, falling back to 1 default profile: <span class="string">&quot;default&quot;</span></span><br><span class="line">c.g.GreetingAutoConfiguration            : new a GreetingApplicationRunner</span><br><span class="line">com.geektime.GreetingApplicationRunner   : Initializing GreetingApplicationRunner <span class="keyword">for</span> Greeting.</span><br><span class="line">c.e.a.AutoconfigureDemoApplication       : Started AutoconfigureDemoApplication <span class="keyword">in</span> 1.562 seconds (JVM running <span class="keyword">for</span> 2.176)</span><br><span class="line">com.geektime.GreetingApplicationRunner   : Hello everyone! We all like Spring!</span><br></pre></td></tr></table></figure>
+
+<p>可以看出“Initializing GreetingApplicationRunner for Greeting.” 实现了对 “Hello everyone! We all like Spring!” 的自动配置。</p>
+<p><strong>结论</strong> <br>从上面的代码可以总结，spring Boot 的自动配置是通过基于条件注解的逻辑实现。</p>
+<h3 id="如何在低版本-Spring-中快速实现类似⾃自动配置的功能"><a href="#如何在低版本-Spring-中快速实现类似⾃自动配置的功能" class="headerlink" title="如何在低版本 Spring 中快速实现类似⾃自动配置的功能"></a>如何在低版本 Spring 中快速实现类似⾃自动配置的功能</h3><h3 id="了解起步依赖及其实现原理"><a href="#了解起步依赖及其实现原理" class="headerlink" title="了解起步依赖及其实现原理"></a>了解起步依赖及其实现原理</h3><h4 id="关于-Maven-依赖管理的一些⼩技巧"><a href="#关于-Maven-依赖管理的一些⼩技巧" class="headerlink" title="关于 Maven 依赖管理的一些⼩技巧"></a>关于 Maven 依赖管理的一些⼩技巧</h4><p>了解你的依赖 </p>
+<ul>
+<li>mvn dependency:tree  </li>
+<li>IDEA Maven Helper 插件</li>
+</ul>
+<p>排除特定依赖 </p>
+<ul>
+<li>exclusion</li>
+</ul>
+<p>统一管理依赖 </p>
+<ul>
+<li>dependencyManagement  </li>
+<li>Bill of Materials - bom</li>
+</ul>
+<h4 id="Spring-Boot-的起步依赖"><a href="#Spring-Boot-的起步依赖" class="headerlink" title="Spring Boot 的起步依赖"></a>Spring Boot 的起步依赖</h4><p>Starter Dependencies </p>
+<ul>
+<li>直接面向功能 </li>
+<li>一站获得所有相关依赖，不再复制粘贴 </li>
+</ul>
+<p>官方的 Starters </p>
+<ul>
+<li>spring-boot-starter-* </li>
+</ul>
+<h4 id="定制⾃己的起步依赖"><a href="#定制⾃己的起步依赖" class="headerlink" title="定制⾃己的起步依赖"></a>定制⾃己的起步依赖</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -2183,6 +2336,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/15/SpringMVC%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JQ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JQ的技术博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/15/SpringMVC%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8-2/" class="post-title-link" itemprop="url">SpringMVC实现拦截器_2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-15 16:03:59" itemprop="dateCreated datePublished" datetime="2022-04-15T16:03:59+08:00">2022-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-10 10:19:24" itemprop="dateModified" datetime="2022-06-10T10:19:24+08:00">2022-06-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SpringMVC-%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">SpringMVC 系列</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="使用拦截器实现日志功能"><a href="#使用拦截器实现日志功能" class="headerlink" title="使用拦截器实现日志功能"></a>使用拦截器实现日志功能</h2><p>实现一个执行 controller 时能够输出相应的执行时间。</p>
+<p>输出例子如下：<br>“URI;methed;status;_;xxms;xxms;xxms”</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/coffee/4;com.example.springmvc.controller.CoffeeController.getById;200;_,227ms;227ms;0ms</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现拦截器"><a href="#实现拦截器" class="headerlink" title="实现拦截器"></a>实现拦截器</h2><ul>
+<li>重写<code>HandlerInterceptor</code>类的<code>preHandle</code>、<code>postHandle</code>和<code>afterCompletion</code>方法。</li>
+<li>注册拦截器</li>
+</ul>
+<h3 id="重写HandlerInterceptor类中的方法"><a href="#重写HandlerInterceptor类中的方法" class="headerlink" title="重写HandlerInterceptor类中的方法"></a>重写<code>HandlerInterceptor</code>类中的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PerformanceInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ThreadLocal&lt;StopWatch&gt; stopWatch = <span class="keyword">new</span> <span class="title class_">ThreadLocal</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">StopWatch</span> <span class="variable">sw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StopWatch</span>();</span><br><span class="line">        stopWatch.set(sw);</span><br><span class="line">        sw.start();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, <span class="meta">@Nullable</span> ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        stopWatch.get().stop();</span><br><span class="line">        stopWatch.get().start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 请求处理完成后的回调，即渲染视图后。</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, <span class="meta">@Nullable</span> Exception ex)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">StopWatch</span> <span class="variable">sw</span> <span class="operator">=</span> stopWatch.get();</span><br><span class="line">        sw.stop();</span><br><span class="line">        <span class="type">String</span> <span class="variable">method</span> <span class="operator">=</span> handler.getClass().getSimpleName();</span><br><span class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> HandlerMethod)&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">beanType</span> <span class="operator">=</span> ((HandlerMethod) handler).getBeanType().getName();</span><br><span class="line">            <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> ((HandlerMethod) handler).getMethod().getName();</span><br><span class="line">            method = beanType + <span class="string">&quot;.&quot;</span> + methodName;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        log.info(<span class="string">&quot;&#123;&#125;;&#123;&#125;;&#123;&#125;;&#123;&#125;,&#123;&#125;ms;&#123;&#125;ms;&#123;&#125;ms&quot;</span>, request.getRequestURI(), method, response.getStatus(),</span><br><span class="line">                ex == <span class="literal">null</span> ? <span class="string">&quot;_&quot;</span> : ex.getClass().getSimpleName(),</span><br><span class="line">                sw.getTotalTimeMillis(), sw.getTotalTimeMillis() - sw.getLastTaskTimeMillis(),</span><br><span class="line">                sw.getLastTaskTimeMillis());</span><br><span class="line">        stopWatch.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注册拦截器"><a href="#注册拦截器" class="headerlink" title="注册拦截器"></a>注册拦截器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    PerformanceInterceptor performanceInterceptor;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 注册拦截器</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 使用 performanceInterceptor 中配置的拦截器，拦截路径为 &quot;/coffee/**&quot; 和 &quot;/order/**&quot; 的请求。</span></span><br><span class="line"><span class="comment">        * */</span></span><br><span class="line">        registry.addInterceptor(performanceInterceptor).addPathPatterns(<span class="string">&quot;/coffee/**&quot;</span>).addPathPatterns(<span class="string">&quot;/order/**&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定使用-Json-输出，使用上海时间"><a href="#指定使用-Json-输出，使用上海时间" class="headerlink" title="指定使用 Json 输出，使用上海时间"></a>指定使用 Json 输出，使用上海时间</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 设置 json 输出缩紧，使用上海时间，使用 curl 请求测试。</span></span><br><span class="line"><span class="comment">* 测试方法：curl http://localhost:8080/coffee/4</span></span><br><span class="line"><span class="comment">* 测试结果如下：</span></span><br><span class="line"><span class="comment">jq@JQmac blog % curl http://localhost:8080/coffee/4</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  &quot;id&quot; : 4,</span></span><br><span class="line"><span class="comment">  &quot;createTime&quot; : &quot;2022-06-08T17:41:26.955+08:00&quot;,</span></span><br><span class="line"><span class="comment">  &quot;updateTime&quot; : &quot;2022-06-08T17:41:26.955+08:00&quot;,</span></span><br><span class="line"><span class="comment">  &quot;name&quot; : &quot;mocha&quot;,</span></span><br><span class="line"><span class="comment">  &quot;price&quot; : 30.00</span></span><br><span class="line"><span class="comment">&#125;% </span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> Jackson2ObjectMapperBuilderCustomizer <span class="title function_">jacksonBuilderCustomizer</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> builder -&gt; &#123;</span><br><span class="line">        builder.indentOutput(<span class="literal">true</span>);</span><br><span class="line">        builder.timeZone(TimeZone.getTimeZone(<span class="string">&quot;Asia/Shanghai&quot;</span>));</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>在terminal中的输出为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/coffee/4;com.example.springmvc.controller.CoffeeController.getById;200;_,227ms;227ms;0ms</span><br></pre></td></tr></table></figure>
+
+<h3 id="一个关于-StopWatch-的实例"><a href="#一个关于-StopWatch-的实例" class="headerlink" title="一个关于 StopWatch 的实例"></a>一个关于 StopWatch 的实例</h3><p><code>StopWatch</code>类实现一个简单的秒表，允许对多个任务进行计时，显示每个命名任务的总运行时间和运行时间。隐藏 System.nanoTime() 的使用，提高应用程序代码的可读性并降低计算错误的可能性。<br><strong>请注意</strong> 此对象并非设计为线程安全的，也不使用同步。此类通常用于在概念验证工作和开发过程中验证性能，而不是作为生产应用程序的一部分。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.util.StopWatch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestStopWatch</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="type">StopWatch</span> <span class="variable">sw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StopWatch</span>();</span><br><span class="line"></span><br><span class="line">        sw.start(<span class="string">&quot;起床&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        sw.stop();</span><br><span class="line"></span><br><span class="line">        sw.start(<span class="string">&quot;洗漱&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">        sw.stop();</span><br><span class="line"></span><br><span class="line">        sw.start(<span class="string">&quot;锁门&quot;</span>);</span><br><span class="line">        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        sw.stop();</span><br><span class="line"></span><br><span class="line">        System.out.println(sw.prettyPrint());</span><br><span class="line">        System.out.println(<span class="string">&quot;-------------------&quot;</span>);</span><br><span class="line">        System.out.println(sw.getTotalTimeMillis());</span><br><span class="line">        System.out.println(sw.getLastTaskName());</span><br><span class="line">        System.out.println(sw.getLastTaskInfo());</span><br><span class="line">        System.out.println(sw.getTaskCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String []argv)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="type">TestStopWatch</span> <span class="variable">testStopWatch</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestStopWatch</span>();</span><br><span class="line">        testStopWatch.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="输出为："><a href="#输出为：" class="headerlink" title="输出为："></a>输出为：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">StopWatch <span class="string">&#x27;&#x27;</span>: running time (millis) = 3512</span><br><span class="line">-----------------------------------------</span><br><span class="line">ms     %     Task name</span><br><span class="line">-----------------------------------------</span><br><span class="line">01005  029%  起床</span><br><span class="line">02005  057%  洗漱</span><br><span class="line">00502  014%  锁门</span><br><span class="line"></span><br><span class="line">-------------------</span><br><span class="line">3512</span><br><span class="line">锁门</span><br><span class="line">org.springframework.util.StopWatch<span class="variable">$TaskInfo</span>@24d46ca6</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/15/SpringMVC%E5%AE%9E%E7%8E%B0%E6%8B%A6%E6%88%AA%E5%99%A8-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2420,13 +2681,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">138k</span>
+    <span title="站点总字数">144k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:05</span>
+    <span title="站点阅读时长">2:11</span>
 </div>
 
         
