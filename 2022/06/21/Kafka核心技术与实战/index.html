@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":210,"display":"post","padding":18,"offset":8,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="第一章 消息引擎系统ABCApache Kafka 是一款开源的消息引擎系统，也是分布式流处理平台。消息引擎系统是一组规范，利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。 如何设计消息编码格式使用已有的一些成熟解决方案，比如使用 CSV、XML 亦或是 JSON；又或者国外大厂开源的一些序列化框架，比如 Google 的 Protocol Buffer 或 Facebo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka核心技术与实战">
+<meta property="og:url" content="http://example.com/2022/06/21/Kafka%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="JQ的技术博客">
+<meta property="og:description" content="第一章 消息引擎系统ABCApache Kafka 是一款开源的消息引擎系统，也是分布式流处理平台。消息引擎系统是一组规范，利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。 如何设计消息编码格式使用已有的一些成熟解决方案，比如使用 CSV、XML 亦或是 JSON；又或者国外大厂开源的一些序列化框架，比如 Google 的 Protocol Buffer 或 Facebo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-21T00:24:47.000Z">
+<meta property="article:modified_time" content="2022-07-03T07:22:32.966Z">
+<meta property="article:author" content="JQ">
+<meta property="article:tag" content="Kafka">
+<meta property="article:tag" content="消息队列">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/06/21/Kafka%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Kafka核心技术与实战 | JQ的技术博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="JQ的技术博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JQ的技术博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/21/Kafka%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JQ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JQ的技术博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kafka核心技术与实战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-21 08:24:47" itemprop="dateCreated datePublished" datetime="2022-06-21T08:24:47+08:00">2022-06-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-03 15:22:32" itemprop="dateModified" datetime="2022-07-03T15:22:32+08:00">2022-07-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kafka/" itemprop="url" rel="index"><span itemprop="name">Kafka</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="第一章-消息引擎系统ABC"><a href="#第一章-消息引擎系统ABC" class="headerlink" title="第一章 消息引擎系统ABC"></a>第一章 消息引擎系统ABC</h2><p>Apache Kafka 是一款开源的消息引擎系统，也是分布式流处理平台。消息引擎系统是一组规范，利用这组规范在不同系统之间传递语义准确的消息，实现松耦合的异步式数据传递。</p>
+<h3 id="如何设计消息编码格式"><a href="#如何设计消息编码格式" class="headerlink" title="如何设计消息编码格式"></a>如何设计消息编码格式</h3><p>使用已有的一些成熟解决方案，比如使用 CSV、XML 亦或是 JSON；又或者国外大厂开源的一些序列化框架，比如 Google 的 Protocol Buffer 或 Facebook 的 Thrift。 Kafka 的选择：它使用的是纯二进制的字节序列。当然消息还是结构化的，只是在使用之前都要将其转换成二进制的字节序列。</p>
+<h3 id="消息引擎系统的消息传输方式"><a href="#消息引擎系统的消息传输方式" class="headerlink" title="消息引擎系统的消息传输方式"></a>消息引擎系统的消息传输方式</h3><ul>
+<li>点对点模型：也叫消息队列模型。系统 A 发送的消息只能被系统 B 接收，其他任何系统都不能读取 A 发送的消息。</li>
+<li>发布 / 订阅模型：与上面不同的是，它有一个主题（Topic）的概念，你可以理解成逻辑语义相近的消息容器。该模型也有发送方和接收方，只不过提法不同。发送方也称为发布者（Publisher），接收方称为订阅者（Subscriber）。和点对点模型不同的是，这个模型可能存在多个发布者向相同的主题发送消息，而订阅者也可能存在多个，它们都能接收到相同主题的消息。</li>
+</ul>
+<p>Kafka 同时支持这两种消息引擎模型。</p>
+<p>为什么系统 A 不能直接发送消息给系统 B，中间还要隔一个消息引擎呢？ – 答案就是“削峰填谷”</p>
+<h3 id="Kafka-术语"><a href="#Kafka-术语" class="headerlink" title="Kafka 术语"></a>Kafka 术语</h3><p>Kafka 的三层消息架构：</p>
+<ul>
+<li>第一层是主题层，每个主题可以配置 M 个分区，而每个分区又可以配置 N 个副本。</li>
+<li>第二层是分区层，每个分区的 N 个副本中只能有一个充当领导者角色，对外提供服务；其他 N-1 个副本是追随者副本，只是提供数据冗余之用。</li>
+<li>第三层是消息层，分区中包含若干条消息，每条消息的位移从 0 开始，依次递增。</li>
+<li>最后，客户端程序只能与分区的领导者副本进行交互。</li>
+</ul>
+<h2 id="第二章-生产者消息分区"><a href="#第二章-生产者消息分区" class="headerlink" title="第二章 生产者消息分区"></a>第二章 生产者消息分区</h2><h3 id="分区的作用"><a href="#分区的作用" class="headerlink" title="分区的作用"></a>分区的作用</h3><ul>
+<li><p>提高负载均衡的能力。不同的分区能够被放置到不同节点的机器上，而数据的读写操作也都是针对分区这个粒度而进行的，这样每个节点的机器都能独立地执行各自分区的读写请求处理。并且，我们还可以通过添加新的节点机器来增加整体系统的吞吐量。</p>
+</li>
+<li><p>利用分区也可以实现其他一些业务级别的需求，比如实现业务级别的消息顺序的问题，这一点我今天也会分享一个具体的案例来说明。</p>
+</li>
+</ul>
+<h3 id="分区策略"><a href="#分区策略" class="headerlink" title="分区策略"></a>分区策略</h3><ul>
+<li>轮询策略</li>
+<li>随机策略</li>
+<li>按消息键保序策略</li>
+<li>其他分区策略</li>
+</ul>
+<h4 id="自定义分区策略"><a href="#自定义分区策略" class="headerlink" title="自定义分区策略"></a>自定义分区策略</h4><p>如果要自定义分区策略，需要显式地配置生产者端的参数partitioner.class。这个参数该怎么设定呢？方法很简单，在编写生产者程序时，可以编写一个具体的类实现org.apache.kafka.clients.producer.Partitioner接口。这个接口也很简单，只定义了两个方法：partition()和close()，通常你只需要实现最重要的 partition 方法。</p>
+<h4 id="轮询策略"><a href="#轮询策略" class="headerlink" title="轮询策略"></a>轮询策略</h4><p>轮询策略是 Kafka Java 生产者 API 默认提供的分区策略。如果你未指定partitioner.class参数，那么你的生产者程序会按照轮询的方式在主题的所有分区间均匀地“码放”消息。</p>
+<h4 id="随机策略"><a href="#随机策略" class="headerlink" title="随机策略"></a>随机策略</h4><p>如果要实现随机策略版的 partition 方法，很简单，只需要两行代码即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;PartitionInfo&gt; partitions = cluster.partitionsForTopic(topic);</span><br><span class="line"><span class="keyword">return</span> ThreadLocalRandom.current().nextInt(partitions.size());</span><br></pre></td></tr></table></figure>
+
+<h4 id="按消息键保序策略"><a href="#按消息键保序策略" class="headerlink" title="按消息键保序策略"></a>按消息键保序策略</h4><p>实现这个策略的 partition 的方法只需要下面两行代码即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;PartitionInfo&gt; partitions = cluster.partitionsForTopic(topic);</span><br><span class="line"><span class="keyword">return</span> Math.abs(key.hashCode()) % partitions.size();</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他分区策略"><a href="#其他分区策略" class="headerlink" title="其他分区策略"></a>其他分区策略</h4><p>基于地理位置的分区策略等。</p>
+<h2 id="第三章-生产者压缩算法"><a href="#第三章-生产者压缩算法" class="headerlink" title="第三章 生产者压缩算法"></a>第三章 生产者压缩算法</h2><p>目前 Kafka 共有两大类消息格式，社区分别称之为 V1 版本和 V2 版本。V2 版本是 Kafka 0.11.0.0 中正式引入的。</p>
+<p>不论是哪个版本，Kafka 的消息层次都分为两层：消息集合（message set）以及消息（message）。一个消息集合中包含若干条日志项（record item），而日志项才是真正封装消息的地方。</p>
+<h3 id="压缩消息的位置"><a href="#压缩消息的位置" class="headerlink" title="压缩消息的位置"></a>压缩消息的位置</h3><p>生产者会生产大量的数据，因此需要压缩消息。一般情况下都在 <strong>Producer 端压缩、Broker 端保持、Consumer 端解压缩</strong>。</p>
+<p>一个配置压缩的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Properties</span> <span class="variable">props</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">props.put(<span class="string">&quot;bootstrap.servers&quot;</span>, <span class="string">&quot;localhost:9092&quot;</span>);</span><br><span class="line">props.put(<span class="string">&quot;acks&quot;</span>, <span class="string">&quot;all&quot;</span>);</span><br><span class="line">props.put(<span class="string">&quot;key.serializer&quot;</span>, <span class="string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span>);</span><br><span class="line">props.put(<span class="string">&quot;value.serializer&quot;</span>, <span class="string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span>);</span><br><span class="line"><span class="comment">// 开启GZIP压缩</span></span><br><span class="line">props.put(<span class="string">&quot;compression.type&quot;</span>, <span class="string">&quot;gzip&quot;</span>);</span><br><span class="line"></span><br><span class="line">Producer&lt;String, String&gt; producer = <span class="keyword">new</span> <span class="title class_">KafkaProducer</span>&lt;&gt;(props);</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>compression.type</code>即可配置压缩算法。</p>
+<h3 id="两种-Broker-端需要压缩算法的例子"><a href="#两种-Broker-端需要压缩算法的例子" class="headerlink" title="两种 Broker 端需要压缩算法的例子"></a>两种 Broker 端需要压缩算法的例子</h3><ul>
+<li>Broker 端指定了和 Producer 端不同的压缩算法。</li>
+</ul>
+<p>先看一个例子。想象这样一个对话。</p>
+<p>Producer 说：“我要使用 GZIP 进行压缩。”</p>
+<p>Broker 说：“不好意思，我这边接收的消息必须使用 Snappy 算法进行压缩。”</p>
+<p>这种情况下 Broker 接收到 GZIP 压缩消息后，只能解压缩然后使用 Snappy 重新压缩一遍。如果你翻开 Kafka 官网，你会发现 Broker 端也有一个参数叫 compression.type，和上面那个例子中的同名。但是这个参数的默认值是 producer，这表示 Broker 端会“尊重”Producer 端使用的压缩算法。可一旦你在 Broker 端设置了不同的 compression.type 值，就一定要小心了，因为可能会发生预料之外的压缩 / 解压缩操作，通常表现为 Broker 端 CPU 使用率飙升。（原因是解压缩和压缩需要消耗CPU）</p>
+<ul>
+<li>Broker 端发生了消息格式转换。</li>
+</ul>
+<p>消息格式转换主要是为了兼容老版本的消费者程序。这个过程中会涉及消息的解压缩和重新压缩。一般情况下这种消息格式转换对性能是有很大影响的，除了这里的压缩之外，还让 Kafka 丧失了引以为豪的 Zero Copy 特性。</p>
+<h3 id="解压缩"><a href="#解压缩" class="headerlink" title="解压缩"></a>解压缩</h3><p>解压缩一般发生在 Consumer 端。Broker 端也会发生解压缩，主要是对消息执行各种验证，但会对 Broker 端性能有一定影响，特别是对 CPU 的使用率而言。</p>
+<p>目前流行的压缩算法有GZIP、Snappy、LZ4 和 zstd。 zstd 具有最高的压缩比，LZ4 具有最高的压缩/解压缩吞吐量。</p>
+<h2 id="第四章-Kafka-丢失消息解决策略"><a href="#第四章-Kafka-丢失消息解决策略" class="headerlink" title="第四章 Kafka 丢失消息解决策略"></a>第四章 Kafka 丢失消息解决策略</h2><p>Kafka 只对“已提交”的消息（committed message）做有限度的持久化保证。</p>
+<p>什么是已提交的消息？</p>
+<p>当 Kafka 的若干个 Broker 成功地接收到一条消息并写入到日志文件后。</p>
+<h3 id="丢失消息的场景"><a href="#丢失消息的场景" class="headerlink" title="丢失消息的场景"></a>丢失消息的场景</h3><ul>
+<li>Producer 程序丢失消息</li>
+</ul>
+<p>网络抖动，导致消息就没有发送到 Broker 端；或者消息本身不合格导致 Broker 拒绝接收（比如消息太大了，超过了 Broker 的承受能力）等都会导致消息丢失。</p>
+<p><strong>解决方法</strong> <br>Producer 永远要使用带有回调通知的发送 API，也就是说不要使用 producer.send(msg)，而要使用 producer.send(msg, callback)。</p>
+<ul>
+<li>Consumer 端丢失数据</li>
+</ul>
+<p>Consumer 端丢失数据主要体现在 Consumer 端要消费的消息不见了。Consumer 程序有个“位移”的概念，表示的是这个 Consumer 当前消费到的 Topic 分区的位置。</p>
+<p>Consumer 端丢失消息主要原因是：先移动了 offset 然后丢消息，出现意外情况停止读消息，但 offset 已移动，导致部分消息丢失。</p>
+<p><strong>解决方法</strong></p>
+<p>Consumer先消费消息，再更新 offset 的顺序。这样会导致重复读。</p>
+<ul>
+<li>Consumer 程序开启多个线程异步处理消息导致丢失消息</li>
+<li></li>
+</ul>
+<p>Consumer 程序开启了多个线程异步处理消息，其中某个线程读取失败，而 Consumer 程序自动地向前更新位移。</p>
+<p><strong>解决方法</strong></p>
+<p>Consumer 程序不要开启自动提交位移，而是要应用程序手动提交位移。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enable.auto.commit=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>在这里我要提醒你一下，单个 Consumer 程序使用多线程来消费消息说起来容易，写成代码却异常困难，因为你很难正确地处理位移的更新，也就是说避免无消费消息丢失很简单，但极易出现消息被消费了多次的情况。</p>
+<h3 id="Kafka-无消息丢失的配置"><a href="#Kafka-无消息丢失的配置" class="headerlink" title="Kafka 无消息丢失的配置"></a>Kafka 无消息丢失的配置</h3><ol>
+<li>不要使用 producer.send(msg)，而要使用 producer.send(msg, callback)。记住，一定要使用带有回调通知的 send 方法。</li>
+<li>设置 acks = all。acks 是 Producer 的一个参数，代表了你对“已提交”消息的定义。如果设置成 all，则表明所有副本 Broker 都要接收到消息，该消息才算是“已提交”。这是最高等级的“已提交”定义。</li>
+<li>设置 retries 为一个较大的值。这里的 retries 同样是 Producer 的参数，对应前面提到的 Producer 自动重试。当出现网络的瞬时抖动时，消息发送可能会失败，此时配置了 retries &gt; 0 的 Producer 能够自动重试消息发送，避免消息丢失。</li>
+<li>设置 unclean.leader.election.enable = false。这是 Broker 端的参数，它控制的是哪些 Broker 有资格竞选分区的 Leader。如果一个 Broker 落后原先的 Leader 太多，那么它一旦成为新的 Leader，必然会造成消息的丢失。故一般都要将该参数设置成 false，即不允许这种情况的发生。</li>
+<li>设置 replication.factor &gt;= 3。这也是 Broker 端的参数。其实这里想表述的是，最好将消息多保存几份，毕竟目前防止消息丢失的主要机制就是冗余。</li>
+<li>设置 min.insync.replicas &gt; 1。这依然是 Broker 端参数，控制的是消息至少要被写入到多少个副本才算是“已提交”。设置成大于 1 可以提升消息持久性。在实际环境中千万不要使用默认值 1。</li>
+<li>确保 replication.factor &gt; min.insync.replicas。如果两者相等，那么只要有一个副本挂机，整个分区就无法正常工作了。我们不仅要改善消息的持久性，防止数据丢失，还要在不降低可用性的基础上完成。推荐设置成 replication.factor = min.insync.replicas + 1。确保消息消费完成再提交。</li>
+<li>Consumer 端有个参数 enable.auto.commit，最好把它设置成 false，并采用手动提交位移的方式。就像前面说的，这对于单 Consumer 多线程处理的场景而言是至关重要的。</li>
+</ol>
+<h2 id="第五章-Kafka-拦截器"><a href="#第五章-Kafka-拦截器" class="headerlink" title="第五章 Kafka 拦截器"></a>第五章 Kafka 拦截器</h2><p>Kafka 拦截器分为生产者拦截器和消费者拦截器。生产者拦截器允许你在发送消息前以及消息提交成功后植入你的拦截器逻辑；而消费者拦截器支持在消费消息前以及提交位移后编写特定逻辑。值得一提的是，这两种拦截器都支持链的方式，即你可以将一组拦截器串连成一个大的拦截器，Kafka 会按照添加顺序依次执行拦截器逻辑。</p>
+<p>当前 Kafka 拦截器的设置方法是通过参数配置完成的。生产者和消费者两端有一个相同的参数，名字叫 interceptor.classes，它指定的是一组类的列表，每个类就是特定逻辑的拦截器实现类。拿上面的例子来说，假设第一个拦截器的完整类路径是 com.yourcompany.kafkaproject.interceptors.AddTimeStampInterceptor，第二个类是 com.yourcompany.kafkaproject.interceptors.UpdateCounterInterceptor，那么你需要按照以下方法在 Producer 端指定拦截器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Properties</span> <span class="variable">props</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">List&lt;String&gt; interceptors = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">interceptors.add(<span class="string">&quot;com.yourcompany.kafkaproject.interceptors.AddTimestampInterceptor&quot;</span>); <span class="comment">// 拦截器1</span></span><br><span class="line">interceptors.add(<span class="string">&quot;com.yourcompany.kafkaproject.interceptors.UpdateCounterInterceptor&quot;</span>); <span class="comment">// 拦截器2</span></span><br><span class="line">props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, interceptors);</span><br></pre></td></tr></table></figure>
+<h3 id="Producer-端拦截器"><a href="#Producer-端拦截器" class="headerlink" title="Producer 端拦截器"></a>Producer 端拦截器</h3><p>AddTimeStampInterceptor 和 UpdateCounterInterceptor 类继承 org.apache.kafka.clients.producer.ProducerInterceptor 接口实现。该接口是 Kafka 提供的，里面有两个核心的方法。</p>
+<ol>
+<li>onSend：该方法会在消息发送之前被调用。如果你想在发送之前对消息“美美容”，这个方法是你唯一的机会。</li>
+<li>onAcknowledgement：该方法会在消息成功提交或发送失败之后被调用。还记得我在上一期中提到的发送回调通知 callback 吗？onAcknowledgement 的调用要早于 callback 的调用。值得注意的是，这个方法和 onSend 不是在同一个线程中被调用的，因此如果你在这两个方法中调用了某个共享可变对象，一定要保证线程安全哦。还有一点很重要，这个方法处在 Producer 发送的主路径中，所以最好别放一些太重的逻辑进去，否则你会发现你的 Producer TPS 直线下降。</li>
+</ol>
+<h3 id="Consumer-端拦截器"><a href="#Consumer-端拦截器" class="headerlink" title="Consumer 端拦截器"></a>Consumer 端拦截器</h3><p>指定消费者拦截器也是同样的方法，只是具体的实现类要实现 org.apache.kafka.clients.consumer.ConsumerInterceptor 接口，这里面也有两个核心方法。</p>
+<ol>
+<li>onConsume：该方法在消息返回给 Consumer 程序之前调用。也就是说在开始正式处理消息之前，拦截器会先拦一道，搞一些事情，之后再返回给你。</li>
+<li>onCommit：Consumer 在提交位移之后调用该方法。通常你可以在该方法中做一些记账类的动作，比如打日志等。</li>
+</ol>
+<h3 id="拦截器使用场景"><a href="#拦截器使用场景" class="headerlink" title="拦截器使用场景"></a>拦截器使用场景</h3><p>Kafka 拦截器可以应用于包括客户端监控、端到端系统性能检测、消息审计等多种功能在内的场景。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kafka/" rel="tag"># Kafka</a>
+              <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag"># 消息队列</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/09/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1SpirngBoot%E9%A1%B9%E7%9B%AE%E7%89%88%E6%9C%AC%E5%86%B2%E7%AA%81/" rel="prev" title="记录一次SpirngBoot项目版本冲突">
+      <i class="fa fa-chevron-left"></i> 记录一次SpirngBoot项目版本冲突
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%B6%88%E6%81%AF%E5%BC%95%E6%93%8E%E7%B3%BB%E7%BB%9FABC"><span class="nav-text">第一章 消息引擎系统ABC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E6%B6%88%E6%81%AF%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="nav-text">如何设计消息编码格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%BC%95%E6%93%8E%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%B6%88%E6%81%AF%E4%BC%A0%E8%BE%93%E6%96%B9%E5%BC%8F"><span class="nav-text">消息引擎系统的消息传输方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E6%9C%AF%E8%AF%AD"><span class="nav-text">Kafka 术语</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E6%81%AF%E5%88%86%E5%8C%BA"><span class="nav-text">第二章 生产者消息分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">分区的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E7%AD%96%E7%95%A5"><span class="nav-text">分区策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%86%E5%8C%BA%E7%AD%96%E7%95%A5"><span class="nav-text">自定义分区策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AE%E8%AF%A2%E7%AD%96%E7%95%A5"><span class="nav-text">轮询策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E7%AD%96%E7%95%A5"><span class="nav-text">随机策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E6%B6%88%E6%81%AF%E9%94%AE%E4%BF%9D%E5%BA%8F%E7%AD%96%E7%95%A5"><span class="nav-text">按消息键保序策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%88%86%E5%8C%BA%E7%AD%96%E7%95%A5"><span class="nav-text">其他分区策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%94%9F%E4%BA%A7%E8%80%85%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95"><span class="nav-text">第三章 生产者压缩算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%B6%88%E6%81%AF%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-text">压缩消息的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D-Broker-%E7%AB%AF%E9%9C%80%E8%A6%81%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-text">两种 Broker 端需要压缩算法的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E7%BC%A9"><span class="nav-text">解压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-Kafka-%E4%B8%A2%E5%A4%B1%E6%B6%88%E6%81%AF%E8%A7%A3%E5%86%B3%E7%AD%96%E7%95%A5"><span class="nav-text">第四章 Kafka 丢失消息解决策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A2%E5%A4%B1%E6%B6%88%E6%81%AF%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-text">丢失消息的场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-%E6%97%A0%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Kafka 无消息丢失的配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-Kafka-%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">第五章 Kafka 拦截器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Producer-%E7%AB%AF%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">Producer 端拦截器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Consumer-%E7%AB%AF%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">Consumer 端拦截器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">拦截器使用场景</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JQ"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JQ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jiaoqiang2014" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jiaoqiang2014" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2682745395@qq.com" title="E-Mail → mailto:2682745395@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class=""></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">151k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:17</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/code-unfold.js"></script>
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
