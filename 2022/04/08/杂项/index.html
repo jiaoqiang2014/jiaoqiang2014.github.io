@@ -29,7 +29,7 @@
 <meta property="og:description" content="配置环境变量exportexport 表示将该路径添加到环境变量中，打开 vim .zshrc ，添加jmeter的快速启动路径  export JMETER_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;apache-jmeter-5.4.3export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH:.:$JMETER_HOME&#x2F;bin:$PATHexport CLASSPATH&#x3D;.:$JAVA_HOM">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-08T03:37:43.000Z">
-<meta property="article:modified_time" content="2022-05-08T14:26:09.346Z">
+<meta property="article:modified_time" content="2022-08-14T03:07:16.180Z">
 <meta property="article:author" content="JQ">
 <meta property="article:tag" content="git">
 <meta property="article:tag" content="linux">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-08 22:26:09" itemprop="dateModified" datetime="2022-05-08T22:26:09+08:00">2022-05-08</time>
+                <time title="修改时间：2022-08-14 11:07:16" itemprop="dateModified" datetime="2022-08-14T11:07:16+08:00">2022-08-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,14 +237,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -265,8 +265,8 @@
 <blockquote>
 <p>export PATH=/usr/local/mysql/bin:$PATH<br>#快速启动、结束MySQL服务, 可以使用alias命令<br>alias mysqlstart=’sudo /usr/local/mysql/support-files/mysql.server start’<br>alias mysqlstop=’sudo /usr/local/mysql/support-files/mysql.server stop’</p>
 </blockquote>
-<hr>
-<h2 id="macOS目录的作用"><a href="#macOS目录的作用" class="headerlink" title="macOS目录的作用"></a>macOS目录的作用</h2><h3 id="系统硬件相关"><a href="#系统硬件相关" class="headerlink" title="系统硬件相关"></a>系统硬件相关</h3><p>/cores 内核转储文件存放目录。当一个进程崩溃时，如果系统允许则会产生转储文件。<br>/dev 设备文件存放目录，如何代表硬盘的/dev/disk0。<br>/Network 网络节点存放目录；<br>/Volumes 文件系统挂载点存放目录。</p>
+<h3 id="mac-默认使用-zsh-还是-bash"><a href="#mac-默认使用-zsh-还是-bash" class="headerlink" title="mac 默认使用 zsh 还是 bash"></a>mac 默认使用 zsh 还是 bash</h3><p>打开terminal 标题上可以看到使用的的是bash还是zsh。只用zsh情况下 <code>~/.zshrc</code> 的路径才会生效。可以使用官方推荐的命令 <code>chsh -s /bin/zsh</code>默认使用 zsh 。为了避免原先 bash 的命令失效，可以在<code>.zshrc</code>中添加<code>source ~/.bash_profile</code>生效<code>~/.bash_profile</code>中的命令。</p>
+<h2 id="IDEA-或者-vscode-默认是-bash-想使用-zsh-需要在编辑器中设置。"><a href="#IDEA-或者-vscode-默认是-bash-想使用-zsh-需要在编辑器中设置。" class="headerlink" title="IDEA 或者 vscode 默认是 bash 想使用 zsh 需要在编辑器中设置。"></a>IDEA 或者 vscode 默认是 bash 想使用 zsh 需要在编辑器中设置。</h2><h2 id="macOS目录的作用"><a href="#macOS目录的作用" class="headerlink" title="macOS目录的作用"></a>macOS目录的作用</h2><h3 id="系统硬件相关"><a href="#系统硬件相关" class="headerlink" title="系统硬件相关"></a>系统硬件相关</h3><p>/cores 内核转储文件存放目录。当一个进程崩溃时，如果系统允许则会产生转储文件。<br>/dev 设备文件存放目录，如何代表硬盘的/dev/disk0。<br>/Network 网络节点存放目录；<br>/Volumes 文件系统挂载点存放目录。</p>
 <h3 id="系统配置相关"><a href="#系统配置相关" class="headerlink" title="系统配置相关"></a>系统配置相关</h3><p>/etc. 标准unix系统配置文件存放目录，如用户密码文件/etc/passwd。此目录实际为指向/private/etc的链接。</p>
 <h3 id="系统程序相关"><a href="#系统程序相关" class="headerlink" title="系统程序相关"></a>系统程序相关</h3><p>/Applications 应用程序目录，默认所有的GUI应用程序都安装在这里；<br>/Library 系统的数据文件、帮助文件、文档等等；<br>/System 只包含一个名为Library的目录，这个子目录中存放了系统的绝大部分组件，如各种framework，以及内核模块，字体文件等等。</p>
 <h3 id="系统命令相关"><a href="#系统命令相关" class="headerlink" title="系统命令相关"></a>系统命令相关</h3><p>/bin 传统unix命令的存放目录，如ls，rm，mv等。<br>/sbin 传统unix管理类命令存放目录，如fdisk，ifconfig等等。</p>
@@ -375,7 +375,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">配置环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#export"><span class="nav-text">export</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alias"><span class="nav-text">alias</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macOS%E7%9B%AE%E5%BD%95%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">macOS目录的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3"><span class="nav-text">系统硬件相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E7%9B%B8%E5%85%B3"><span class="nav-text">系统配置相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%A8%8B%E5%BA%8F%E7%9B%B8%E5%85%B3"><span class="nav-text">系统程序相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3"><span class="nav-text">系统命令相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%9B%B8%E5%85%B3"><span class="nav-text">用户信息相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%8F%E5%B8%B8%E4%BD%BF%E7%94%A8"><span class="nav-text">用户经常使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux-%E5%91%BD%E4%BB%A4%E6%8B%BE%E9%81%97"><span class="nav-text">linux 命令拾遗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lsof%EF%BC%88list-open-files%EF%BC%89"><span class="nav-text">lsof（list open files）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ls%EF%BC%88list%EF%BC%89"><span class="nav-text">ls（list）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E6%B5%81%E7%A8%8B"><span class="nav-text">git流程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">配置环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#export"><span class="nav-text">export</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alias"><span class="nav-text">alias</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mac-%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8-zsh-%E8%BF%98%E6%98%AF-bash"><span class="nav-text">mac 默认使用 zsh 还是 bash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDEA-%E6%88%96%E8%80%85-vscode-%E9%BB%98%E8%AE%A4%E6%98%AF-bash-%E6%83%B3%E4%BD%BF%E7%94%A8-zsh-%E9%9C%80%E8%A6%81%E5%9C%A8%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E8%AE%BE%E7%BD%AE%E3%80%82"><span class="nav-text">IDEA 或者 vscode 默认是 bash 想使用 zsh 需要在编辑器中设置。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macOS%E7%9B%AE%E5%BD%95%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">macOS目录的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3"><span class="nav-text">系统硬件相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E7%9B%B8%E5%85%B3"><span class="nav-text">系统配置相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%A8%8B%E5%BA%8F%E7%9B%B8%E5%85%B3"><span class="nav-text">系统程序相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3"><span class="nav-text">系统命令相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%9B%B8%E5%85%B3"><span class="nav-text">用户信息相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%8F%E5%B8%B8%E4%BD%BF%E7%94%A8"><span class="nav-text">用户经常使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux-%E5%91%BD%E4%BB%A4%E6%8B%BE%E9%81%97"><span class="nav-text">linux 命令拾遗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lsof%EF%BC%88list-open-files%EF%BC%89"><span class="nav-text">lsof（list open files）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ls%EF%BC%88list%EF%BC%89"><span class="nav-text">ls（list）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E6%B5%81%E7%A8%8B"><span class="nav-text">git流程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -453,7 +453,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">155k</span>
+    <span title="站点总字数">156k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
