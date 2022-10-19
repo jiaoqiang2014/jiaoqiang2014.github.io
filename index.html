@@ -1111,7 +1111,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-17 08:28:45" itemprop="dateModified" datetime="2022-08-17T08:28:45+08:00">2022-08-17</time>
+                <time title="修改时间：2022-10-19 08:42:03" itemprop="dateModified" datetime="2022-10-19T08:42:03+08:00">2022-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1129,14 +1129,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>109k</span>
+              <span>111k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:39</span>
+              <span>1:41</span>
             </span>
 
         </div>
@@ -2165,13 +2165,13 @@
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7046554366068654094#heading-17">一文搞懂🔥SpringBoot自动配置原理</a></p>
 <h3 id="⾃动配置的实现原理"><a href="#⾃动配置的实现原理" class="headerlink" title="⾃动配置的实现原理"></a>⾃动配置的实现原理</h3><p>@EnableAutoConﬁguration</p>
 <ul>
-<li>AutoConfigurationImportSelector</li>
-<li>META-INF/spring.factories<ul>
+<li>AutoConfigurationImportSelector 类</li>
+<li>META-INF/spring.factories 文件<ul>
 <li>org.springframework.boot.autoconfigure.EnableAutoConfiguration</li>
 </ul>
 </li>
 </ul>
-<p>AutoConfigurationImportSelector 会自动加载 META-INF/spring.factories</p>
+<p>AutoConfigurationImportSelector 类通过调用 getCandidateConfigurations 方法，调用 SpringFactoriesLoader 类来加载 META-INF/spring.factories</p>
 <p>条件注解</p>
 <ul>
 <li>@Conditional</li>
@@ -2181,8 +2181,18 @@
 <li>@ConditionalOnProperty</li>
 <li>……</li>
 </ul>
+<h3 id="以-DataSourceAutoConfiguration-自动配置为例"><a href="#以-DataSourceAutoConfiguration-自动配置为例" class="headerlink" title="以 DataSourceAutoConfiguration 自动配置为例"></a>以 DataSourceAutoConfiguration 自动配置为例</h3><ul>
+<li><p>spring.factories 中包含 org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration</p>
+</li>
+<li><p>DataSourceAutoConfiguration 类中 @ConditionalOnClass({ DataSource.class, EmbeddedDatabaseType.class }) ，以 EmbeddedDatabaseType 为例。</p>
+</li>
+<li><p>代码分析</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123; DataSource.class, EmbeddedDatabaseType.class &#125;)</span>	<span class="comment">// 当类中有。。。</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(type = &quot;io.r2dbc.spi.ConnectionFactory&quot;)</span></span><br><span class="line"><span class="meta">@AutoConfigureBefore(SqlInitializationAutoConfiguration.class)</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(DataSourceProperties.class)</span></span><br><span class="line"><span class="meta">@Import(&#123; DataSourcePoolMetadataProvidersConfiguration.class,</span></span><br><span class="line"><span class="meta">		DataSourceInitializationConfiguration.InitializationSpecificCredentialsDataSourceInitializationConfiguration.class,</span></span><br><span class="line"><span class="meta">		DataSourceInitializationConfiguration.SharedCredentialsDataSourceInitializationConfiguration.class &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataSourceAutoConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line">	<span class="meta">@Conditional(EmbeddedDatabaseCondition.class)</span></span><br><span class="line">	<span class="meta">@ConditionalOnMissingBean(&#123; DataSource.class, XADataSource.class &#125;)</span></span><br><span class="line">	<span class="meta">@Import(EmbeddedDataSourceConfiguration.class)</span>	<span class="comment">// 导入 EmbeddedDatabaseConfiguration 的配置</span></span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">EmbeddedDatabaseConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(DataSourceProperties.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmbeddedDataSourceConfiguration</span> <span class="keyword">implements</span> <span class="title class_">BeanClassLoaderAware</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> ClassLoader classLoader;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBeanClassLoader</span><span class="params">(ClassLoader classLoader)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.classLoader = classLoader;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 构造出一个 EmbeddedDatabase 数据源的 bean</span></span><br><span class="line">	<span class="meta">@Bean(destroyMethod = &quot;shutdown&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> EmbeddedDatabase <span class="title function_">dataSource</span><span class="params">(DataSourceProperties properties)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EmbeddedDatabaseBuilder</span>().setType(EmbeddedDatabaseConnection.get(<span class="built_in">this</span>.classLoader).getType())</span><br><span class="line">				.setName(properties.determineDatabaseName()).build();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 <h3 id="观察⾃动配置的判断结果"><a href="#观察⾃动配置的判断结果" class="headerlink" title="观察⾃动配置的判断结果"></a>观察⾃动配置的判断结果</h3><ul>
-<li>–debug</li>
+<li>执行的参数中加入<code>--debug</code>,就可以打印出自动配置的类。</li>
 </ul>
 <p>这个结果是通过 ConditionEvaluationReportLoggingListener 输出的。</p>
 <h4 id="ConditionEvaluationReportLoggingListener"><a href="#ConditionEvaluationReportLoggingListener" class="headerlink" title="ConditionEvaluationReportLoggingListener"></a>ConditionEvaluationReportLoggingListener</h4><ul>
@@ -2847,13 +2857,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">157k</span>
+    <span title="站点总字数">159k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:22</span>
+    <span title="站点阅读时长">2:24</span>
 </div>
 
         
