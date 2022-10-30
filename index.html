@@ -1111,7 +1111,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-25 08:04:03" itemprop="dateModified" datetime="2022-10-25T08:04:03+08:00">2022-10-25</time>
+                <time title="修改时间：2022-10-25 08:20:56" itemprop="dateModified" datetime="2022-10-25T08:20:56+08:00">2022-10-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -2273,7 +2273,7 @@
 <p>指定该自动配置类的执行顺序。</p>
 <h4 id="动⼿实现⾃⼰的⾃动配置代码"><a href="#动⼿实现⾃⼰的⾃动配置代码" class="headerlink" title="动⼿实现⾃⼰的⾃动配置代码"></a>动⼿实现⾃⼰的⾃动配置代码</h4><p><a target="_blank" rel="noopener" href="https://github.com/geektime-geekbang/geektime-spring-family/tree/master/Chapter%209">代码</a></p>
 <p>在类 autoconfigure-demo 启动时，自动实现 geektime 的自动配置。</p>
-<p>首先创建一个主工程 autoconfigure-demo，完成对它的自动配置。创建两个模块 geektime 和 geektime-spring-boot-autoconfigure ，通过 geektime-spring-boot-autoconfigure 实现对 geektime 的自动配置。</p>
+<p>首先创建一个主工程 autoconfigure-demo，完成对它的自动配置。创建两个模块 geektime 和 geektime-spring-boot-autoconfigure ，通过 geektime-spring-boot-autoconfigure 实现对 geektime 的自动配置 – 创建一个 geektime 的 bean。</p>
 <p><strong>在 autoconfigure-demo 的 pom 中引入 对 geektime-spring-boot-autoconfigure 和 geektime 的依赖</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>geektime<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.geektimeAutoconfigure<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>geektime-spring-boot-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
