@@ -928,7 +928,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/18/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E6%9D%82%E9%A1%B9/" class="post-title-link" itemprop="url">开发环境安装杂项</a>
+            <a href="/2022/04/18/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E6%9D%82%E9%A1%B9/" class="post-title-link" itemprop="url">开发环境安装杂项(git/docker)</a>
         </h2>
 
         <div class="post-meta">
@@ -945,7 +945,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-07 16:29:08" itemprop="dateModified" datetime="2022-08-07T16:29:08+08:00">2022-08-07</time>
+                <time title="修改时间：2022-10-30 12:38:27" itemprop="dateModified" datetime="2022-10-30T12:38:27+08:00">2022-10-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1111,7 +1111,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-25 08:20:56" itemprop="dateModified" datetime="2022-10-25T08:20:56+08:00">2022-10-25</time>
+                <time title="修改时间：2022-10-30 23:10:40" itemprop="dateModified" datetime="2022-10-30T23:10:40+08:00">2022-10-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1129,14 +1129,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>111k</span>
+              <span>112k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:41</span>
+              <span>1:42</span>
             </span>
 
         </div>
@@ -1148,7 +1148,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="第二章-JDBC必知必会"><a href="#第二章-JDBC必知必会" class="headerlink" title="第二章 JDBC必知必会"></a>第二章 JDBC必知必会</h2><h3 id="1、配置单个数据源"><a href="#1、配置单个数据源" class="headerlink" title="1、配置单个数据源"></a>1、配置单个数据源</h3><p>建立h2、web、lombak的springboot。</p>
+          <h2 id="第一章-基础知识"><a href="#第一章-基础知识" class="headerlink" title="第一章 基础知识"></a>第一章 基础知识</h2><h3 id="IOC-–-控制反转"><a href="#IOC-–-控制反转" class="headerlink" title="IOC – 控制反转"></a>IOC – 控制反转</h3><ol>
+<li>谁控制谁？<br>在以往的开发中，一个类若想调用另一个类的属性或方法，通常会使用new Object()的方式来实现调用，完全由开发者控制。spring 中通过 IOC 容器统一管理对象（Bean）。</li>
+<li>什么实现反转<br>将<code>Bean</code>的控制权从开发者手中反转给IOC容器。<br>参考：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1282381977747489">IoC原理</a><h3 id="ID-–-依赖注入"><a href="#ID-–-依赖注入" class="headerlink" title="ID – 依赖注入"></a>ID – 依赖注入</h3>依赖：一般通过 <code>new Object()</code> 的方式将一个对象传进来，这是一种强依赖。如果通过构造方式的形式将将一个对象传进来，就可以称为依赖注入。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InjetionExample</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Logger logger;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">InjetionExample</span><span class="params">(Logger logger)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.logger = logger;</span><br><span class="line">        logger.info(<span class="string">&quot;this is log&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>Spring 中通过依赖注入的形式实现了控制反转。</strong></p>
+<h2 id="第二章-JDBC必知必会"><a href="#第二章-JDBC必知必会" class="headerlink" title="第二章 JDBC必知必会"></a>第二章 JDBC必知必会</h2><h3 id="1、配置单个数据源"><a href="#1、配置单个数据源" class="headerlink" title="1、配置单个数据源"></a>1、配置单个数据源</h3><p>建立h2、web、lombak的springboot。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.learn;</span><br><span class="line"><span class="keyword">import</span> com.example.learn.config.ProfileProperties;</span><br><span class="line"><span class="keyword">import</span> com.example.learn.service.LibraryProperties;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.InitializingBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.CommandLineRunner;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.EnableAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.sql.DataSource;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication()</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoApplication</span> <span class="keyword">implements</span> <span class="title class_">CommandLineRunner</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(DemoApplication.class);</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	DataSource dataSource;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		SpringApplication.run(DemoApplication.class, args);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(String... args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		showConnection();</span><br><span class="line">		showData();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">showData</span><span class="params">()</span> &#123;</span><br><span class="line">		jdbcTemplate.queryForList(<span class="string">&quot;SELECT * FROM FOO&quot;</span>).forEach(row -&gt; log.info(row.toString()));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">showConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">		log.info(dataSource.toString());</span><br><span class="line">		<span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> dataSource.getConnection();</span><br><span class="line">		log.info(conn.toString());</span><br><span class="line">		conn.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在resource目录先创建schema.sql文件，写入：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> FOO (ID <span class="type">INT</span> <span class="keyword">IDENTITY</span>, BAR <span class="type">VARCHAR</span>(<span class="number">64</span>));</span><br></pre></td></tr></table></figure>
@@ -2155,23 +2160,27 @@
 </ul>
 <p>开启⾃动配置</p>
 <ul>
-<li>@EnableAutoConfiguration <ul>
-<li>exclude = Class&lt;?&gt;[] </li>
+<li>@EnableAutoConfiguration<br>此注解可以开启自动配置<ul>
+<li>exclude = Class&lt;?&gt;[]<br>  可以排除不需要的自动配置的类</li>
 </ul>
 </li>
-<li>@SpringBootApplication</li>
+<li>@SpringBootApplication<br>此注解中包含了 @EnableAutoConfiguration</li>
 </ul>
-<p>@SpringBootApplication 注解中包含了 @EnableAutoConﬁguration</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7046554366068654094#heading-17">一文搞懂🔥SpringBoot自动配置原理</a></p>
-<h3 id="⾃动配置的实现原理"><a href="#⾃动配置的实现原理" class="headerlink" title="⾃动配置的实现原理"></a>⾃动配置的实现原理</h3><p>@EnableAutoConﬁguration</p>
+<h3 id="⾃动配置的实现原理"><a href="#⾃动配置的实现原理" class="headerlink" title="⾃动配置的实现原理"></a>⾃动配置的实现原理</h3><p>@EnableAutoConﬁguration 使用</p>
 <ul>
-<li>AutoConfigurationImportSelector 类</li>
-<li>META-INF/spring.factories 文件<ul>
-<li>org.springframework.boot.autoconfigure.EnableAutoConfiguration</li>
-</ul>
+<li><code>@Import(AutoConfigurationImportSelector.class)</code>注入<code>AutoConfigurationImportSelector</code>的bean，</li>
+<li>然后 <code>AutoConfigurationImportSelector</code> -&gt; </li>
+<li><code>getAutoConfigurationEntry</code> -&gt; </li>
+<li><code>getCandidateConfigurations</code> -&gt; </li>
+<li>`SpringFactoriesLoader.loadFactoryNames(<pre><code>         getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader())`；  
+         其中`getSpringFactoriesLoaderFactoryClass() == EnableAutoConfiguration.class`, `在`loadFactoryNames()`方法中定义了路`FACTORIES_RESOURCE_LOCATION = &quot;META-INF/spring.factories&quot;`，获取了`key = org.springframework.boot.autoconfigure.EnableAutoConfiguration`的所有value，以 List 的形式返回 -&gt;
+</code></pre>
 </li>
+<li>过滤掉需要exclude的配置项和重复的配置项等。</li>
+<li>最终返回一个<code>AutoConfigurationEntry</code>， 在运行时通过<code>@Conditional</code>判断是否需要注入到bean中，最后完成自动配置。 </li>
 </ul>
-<p>AutoConfigurationImportSelector 类通过调用 getCandidateConfigurations 方法，调用 SpringFactoriesLoader 类来加载 META-INF/spring.factories</p>
+<p>可以看出通过<code>AutoConfigurationImportSelector</code>通过<code>SpringFactoriesLoader</code>取到文件<code>META-INF/spring.factories</code>中<code>org.springframework.boot.autoconfigure</code>对应的value值，然后通过<code>@Conditional</code>判断是否注入到bean中。</p>
 <p>条件注解</p>
 <ul>
 <li>@Conditional</li>
@@ -2857,13 +2866,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">159k</span>
+    <span title="站点总字数">160k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:24</span>
+    <span title="站点阅读时长">2:25</span>
 </div>
 
         
